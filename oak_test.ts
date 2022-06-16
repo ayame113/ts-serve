@@ -41,7 +41,10 @@ async function readTextFile(path: string) {
   return await Deno.readTextFile(new URL(path, import.meta.url));
 }
 async function transpileFile(path: string) {
-  return await transpile(await readTextFile(path), new URL("file:///src.ts"));
+  const url = path.endsWith(".ts")
+    ? new URL("file:///src.ts")
+    : new URL("file:///src.tsx");
+  return await transpile(await readTextFile(path), url);
 }
 
 Deno.test({
@@ -54,10 +57,20 @@ Deno.test({
       assertEquals(contentType, jsContentType);
     }
     {
+      const { result, contentType } = await request("/oak_test.ts");
+      assertEquals(result, await transpileFile("./oak_test.ts"));
+      assertEquals(contentType, jsContentType);
+    }
+    {
       const { result, contentType } = await request(
         "/utils/transpile_bench.ts",
       );
       assertEquals(result, await transpileFile("./utils/transpile_bench.ts"));
+      assertEquals(contentType, jsContentType);
+    }
+    {
+      const { result, contentType } = await request("/test/a.tsx");
+      assertEquals(result, await transpileFile("./test/a.tsx"));
       assertEquals(contentType, jsContentType);
     }
     await abortServer();

@@ -68,3 +68,9 @@ import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveFileWithTs(request, "./mod.ts"));
 ```
+
+## develop
+
+```shell
+> deno task test
+```
