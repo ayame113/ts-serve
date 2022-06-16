@@ -4,16 +4,22 @@ TypeScript + ES Modules
 
 Transpile TypeScript on the fly and deliver it from your server as ES Modules.
 
+```ts
+import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
+import { serveDirWithTs } from "./mod.ts";
+
+serve((request) => serveDirWithTs(request));
+```
+
 ```tsx ignore
 // index.html
-
 <script src="./main.ts" type="module"></script>;
 
 // main.ts
 console.log(1);
 ```
 
-- The URL remains `*.ts` and cannot be rewritten. That is, `import "./foo.ts"`
+- The URL remains `*.ts` and will not be rewritten. That is, `import "./foo.ts"`
   and `<script src="./foo.ts" type="module">` work.
 - You can use `import "./foo.ts"`, which has the same syntax as Deno. This means
   that you can use the completion and diagnostic features by installing Deno and
