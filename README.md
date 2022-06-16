@@ -6,7 +6,7 @@ Transpile TypeScript on the fly and deliver it from your server as ES Modules.
 
 ```ts
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
-import { serveDirWithTs } from "./mod.ts";
+import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveDirWithTs(request));
 ```
@@ -31,7 +31,7 @@ As oak middleware:
 
 ```ts
 import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { tsMiddleware } from "./mod.ts";
+import { tsMiddleware } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 const app = new Application();
 app.use(tsMiddleware); // use middleware and transpile TS code.
@@ -53,7 +53,7 @@ function in the Deno standard library:
 
 ```ts
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
-import { serveDirWithTs } from "./mod.ts";
+import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveDirWithTs(request));
 ```
@@ -64,7 +64,7 @@ function in the Deno standard library:
 
 ```ts
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
-import { serveFileWithTs } from "./mod.ts";
+import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveFileWithTs(request, "./mod.ts"));
 ```

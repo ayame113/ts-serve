@@ -23,7 +23,7 @@ const jsContentType = contentType(".js")!;
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
- * import { serveFileWithTs } from "./mod.ts";
+ * import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
@@ -50,7 +50,7 @@ export async function serveFileWithTs(
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
- * import { serveDirWithTs } from "./mod.ts";
+ * import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * serve((request) => serveDirWithTs(request));
  * ```
@@ -98,7 +98,7 @@ async function rewriteTsResponse(response: Response, url: URL) {
  *
  * ```ts
  * import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
- * import { tsMiddleware } from "./mod.ts";
+ * import { tsMiddleware } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * const app = new Application();
  * app.use(tsMiddleware);
