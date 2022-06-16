@@ -1,8 +1,10 @@
 # ts-serve
 
+[![codecov](https://codecov.io/gh/ayame113/ts-serve/branch/main/graph/badge.svg?token=mz0SfmUYRL)](https://codecov.io/gh/ayame113/ts-serve)
+
 TypeScript + ES Modules
 
-Transpile TypeScript on the fly and deliver it from your server as ES Modules.
+Transpile TypeScript on the fly and serve it from your server as ES Modules.
 
 ```ts
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
@@ -20,7 +22,7 @@ console.log(1);
 ```
 
 - The URL remains `*.ts` and will not be rewritten. That is, `import "./foo.ts"`
-  and `<script src="./foo.ts" type="module">` work.
+  and `<script src="./foo.ts" type="module">` work on browser.
 - You can use `import "./foo.ts"`, which has the same syntax as Deno. This means
   that you can use the completion and diagnostic features for frontend code by
   installing the Deno and Deno extensions in your editor.
@@ -34,7 +36,9 @@ import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { tsMiddleware } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 const app = new Application();
-app.use(tsMiddleware); // use middleware and transpile TS code.
+
+// use middleware and transpile TS code
+app.use(tsMiddleware);
 
 // serve static file
 app.use(async (ctx, next) => {

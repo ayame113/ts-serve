@@ -99,7 +99,11 @@ async function rewriteTsResponse(response: Response, url: URL) {
  * import { tsMiddleware } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * const app = new Application();
+ *
+ * // use middleware and transpile TS code
  * app.use(tsMiddleware);
+ *
+ * // serve static file
  * app.use(async (ctx, next) => {
  *   try {
  *     await ctx.send({ root: "./" });
