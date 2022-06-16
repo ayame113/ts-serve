@@ -22,8 +22,8 @@ console.log(1);
 - The URL remains `*.ts` and will not be rewritten. That is, `import "./foo.ts"`
   and `<script src="./foo.ts" type="module">` work.
 - You can use `import "./foo.ts"`, which has the same syntax as Deno. This means
-  that you can use the completion and diagnostic features by installing the Deno
-  and Deno extensions in your editor for your browser code.
+  that you can use the completion and diagnostic features for frontend code by
+  installing the Deno and Deno extensions in your editor.
 
 ## Usage
 
