@@ -68,8 +68,6 @@ export async function serveDirWithTs(
   const response = await serveDir(request);
   // if range request, skip
   if (response.status === 200) {
-    console.log(pathname);
-
     if (pathname.endsWith(".ts")) {
       return rewriteTsResponse(response, tsUrl);
     } else if (pathname.endsWith(".tsx")) {
