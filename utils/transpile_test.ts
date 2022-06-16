@@ -17,9 +17,9 @@ const codes = [
 ] as const;
 for (const [path, src, emit] of codes) {
   Deno.test({
-    name: `transpile - ${src}`,
+    name: `transpile - '${src}'`,
     async fn() {
-      assertEquals(await transpile(src, path), emit);
+      assertEquals(await transpile(src, new URL(path)), emit);
     },
   });
 }

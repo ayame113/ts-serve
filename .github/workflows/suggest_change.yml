@@ -1,0 +1,20 @@
+name: Suggest-Change
+
+on: pull_request
+
+jobs:
+  Suggest-Change:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout Module
+        uses: actions/checkout@v2
+      - name: Use Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - name: 😉 Format
+        run: deno fmt
+      - name: Create Suggestion
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: deno fmt

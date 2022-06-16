@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "test": "deno test --doc --allow-net --allow-read=.",
+    "check": "deno check ./mod.ts"
+  }
+}
