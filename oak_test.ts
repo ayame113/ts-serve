@@ -85,6 +85,20 @@ Deno.test({
 });
 
 Deno.test({
+  name: "oak middleware - not ts response",
+  async fn() {
+    const app = new Application();
+    app.use(tsMiddleware);
+    app.use((ctx) => {
+      ctx.response.body = "texttexttext!!!";
+      ctx.response.type = ".md";
+    });
+    const res = await app.handle(new Request("http://localhost/"));
+    assertEquals(await res!.text(), "texttexttext!!!");
+  },
+});
+
+Deno.test({
   name: "oak middleware - null response",
   async fn() {
     const app = new Application();
