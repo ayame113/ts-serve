@@ -2,8 +2,6 @@ import { assertEquals } from "https://deno.land/std@0.143.0/testing/asserts.ts";
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
 import { serveDirWithTs, serveFileWithTs, transpile } from "./mod.ts";
 
-// serve((request) => serveFileWithTs(request, "./mod.ts"));
-
 Deno.test({
   name: "file server - serveFileWithTs",
   async fn() {
@@ -16,6 +14,9 @@ Deno.test({
       }
       if (pathname === "/test/a.tsx") {
         return serveFileWithTs(request, "./test/a.tsx");
+      }
+      if (pathname === "/test/a.jsx") {
+        return serveFileWithTs(request, "./test/a.jsx");
       }
       throw new Error("unreachable");
     }, {
@@ -37,7 +38,6 @@ Deno.test({
         "application/javascript; charset=UTF-8",
       );
     }
-
     {
       const res = await fetch("http://localhost:8886/test/a.tsx");
       assertEquals(
@@ -45,6 +45,20 @@ Deno.test({
         await transpile(
           await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
           new URL("file:///src.tsx"),
+        ),
+      );
+      assertEquals(
+        res.headers.get("Content-Type"),
+        "application/javascript; charset=UTF-8",
+      );
+    }
+    {
+      const res = await fetch("http://localhost:8886/test/a.jsx");
+      assertEquals(
+        await res.text(),
+        await transpile(
+          await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
+          new URL("file:///src.jsx"),
         ),
       );
       assertEquals(
@@ -80,7 +94,6 @@ Deno.test({
         "application/javascript; charset=UTF-8",
       );
     }
-
     {
       const res = await fetch("http://localhost:8887/test/a.tsx");
       assertEquals(
@@ -88,6 +101,20 @@ Deno.test({
         await transpile(
           await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
           new URL("file:///src.tsx"),
+        ),
+      );
+      assertEquals(
+        res.headers.get("Content-Type"),
+        "application/javascript; charset=UTF-8",
+      );
+    }
+    {
+      const res = await fetch("http://localhost:8887/test/a.jsx");
+      assertEquals(
+        await res.text(),
+        await transpile(
+          await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
+          new URL("file:///src.jsx"),
         ),
       );
       assertEquals(

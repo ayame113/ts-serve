@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "test": "deno test --doc --allow-net --allow-read=.",
+    "test": "deno test --doc --jobs --shuffle --allow-net --allow-read=.",
     "check": "deno check ./mod.ts"
   },
   "importMap": "./import-map.json"

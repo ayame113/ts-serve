@@ -14,8 +14,10 @@ const tsType = new Set<string | undefined>(
   ["ts", ".ts", "mts", ".mts", "video/mp2t"],
 );
 const tsxType = new Set<string | undefined>(["tsx", ".tsx"]);
+const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
 const tsUrl = new URL("file:///src.ts");
 const tsxUrl = new URL("file:///src.tsx");
+const jsxUrl = new URL("file:///src.jsx");
 const jsContentType = contentType(".js")!;
 
 /**
@@ -40,6 +42,8 @@ export async function serveFileWithTs(
       return rewriteTsResponse(response, tsUrl);
     } else if (filePath.endsWith(".tsx")) {
       return rewriteTsResponse(response, tsxUrl);
+    } else if (filePath.endsWith(".jsx")) {
+      return rewriteTsResponse(response, jsxUrl);
     }
   }
   return response;
@@ -72,6 +76,8 @@ export async function serveDirWithTs(
       return rewriteTsResponse(response, tsUrl);
     } else if (pathname.endsWith(".tsx")) {
       return rewriteTsResponse(response, tsxUrl);
+    } else if (pathname.endsWith(".jsx")) {
+      return rewriteTsResponse(response, jsxUrl);
     }
   }
   return response;
@@ -123,6 +129,8 @@ export async function tsMiddleware(
     ? tsUrl
     : tsxType.has(ctx.response.type)
     ? tsxUrl
+    : jsxType.has(ctx.response.type)
+    ? jsxUrl
     : undefined;
 
   if (specifier) {
