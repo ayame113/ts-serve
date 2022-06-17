@@ -29,7 +29,8 @@ jobs:
           commit-message: "chore(deps): update deno dependencies"
           title: Update Deno Dependencies
           body: |-
-            Some external modules are stale. [![Update Deno Dependencies](https://github.com/ayame113/ts-serve/actions/workflows/update.yml/badge.svg)](https://github.com/ayame113/ts-serve/actions/workflows/update.yml)
+            Some external modules are stale.
+            [![Update Deno Dependencies](https://github.com/ayame113/ts-serve/actions/workflows/update.yml/badge.svg)](https://github.com/ayame113/ts-serve/actions/workflows/update.yml)
             <details><summary>Details</summary><div>
 
             ```
