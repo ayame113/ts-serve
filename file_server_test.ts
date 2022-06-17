@@ -22,6 +22,7 @@ Deno.test({
     }, {
       signal: controller.signal,
       port: 8886,
+      onListen() {},
     });
 
     {
@@ -71,14 +72,37 @@ Deno.test({
     await serverPromise;
   },
 });
+
+Deno.test({
+  name: "file server - serveFileWithTs (not ts file)",
+  async fn() {
+    const res = await serveFileWithTs(
+      new Request("http://localhost/README.md"),
+      "./README.md",
+    );
+    assertEquals(
+      await res.text(),
+      await Deno.readTextFile(new URL("./README.md", import.meta.url)),
+    );
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "text/markdown; charset=UTF-8",
+    );
+  },
+});
+
 Deno.test({
   name: "file server - serveDirWithTs",
   async fn() {
     const controller = new AbortController();
-    const serverPromise = serve((request) => serveDirWithTs(request), {
-      signal: controller.signal,
-      port: 8887,
-    });
+    const serverPromise = serve(
+      (request) => serveDirWithTs(request, { quiet: true }),
+      {
+        signal: controller.signal,
+        port: 8887,
+        onListen() {},
+      },
+    );
 
     {
       const res = await fetch("http://localhost:8887/mod.ts");
@@ -125,5 +149,39 @@ Deno.test({
 
     controller.abort();
     await serverPromise;
+  },
+});
+
+Deno.test({
+  name: "file server - serveDirWithTs (not ts file)",
+  async fn() {
+    const res = await serveDirWithTs(
+      new Request("http://localhost/README.md"),
+      { quiet: true },
+    );
+    assertEquals(
+      await res.text(),
+      await Deno.readTextFile(new URL("./README.md", import.meta.url)),
+    );
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "text/markdown; charset=UTF-8",
+    );
+  },
+});
+
+Deno.test({
+  name: "file server - serveDirWithTs (not found)",
+  async fn() {
+    const res = await serveDirWithTs(
+      new Request("http://localhost/NOT_FOUND"),
+      { quiet: true },
+    );
+    assertEquals(await res.text(), "Not Found");
+    assertEquals(res.status, 404);
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "text/plain;charset=UTF-8",
+    );
   },
 });

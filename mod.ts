@@ -69,7 +69,7 @@ export async function serveDirWithTs(
   } catch {
     return await serveDir(request, options);
   }
-  const response = await serveDir(request);
+  const response = await serveDir(request, options);
   // if range request, skip
   if (response.status === 200) {
     if (pathname.endsWith(".ts")) {
