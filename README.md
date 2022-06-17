@@ -21,6 +21,7 @@ serve((request) => serveDirWithTs(request));
 console.log(1);
 ```
 
+- Supports ts, tsx and jsx transpiling.
 - The URL remains `*.ts` and will not be rewritten. That is, `import "./foo.ts"`
   and `<script src="./foo.ts" type="module">` work on browser.
 - You can use `import "./foo.ts"`, which has the same syntax as Deno. This means
