@@ -185,3 +185,42 @@ Deno.test({
     );
   },
 });
+
+Deno.test({
+  name: "file server - serveDirWithTs (relative url)",
+  async fn() {
+    const request = new Request("http://localhost/");
+    Object.defineProperty(request, "url", {
+      value: "/mod.ts",
+    });
+    const res = await serveDirWithTs(request, { quiet: true });
+    assertEquals(
+      await res.text(),
+      await transpile(
+        await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
+        new URL("file:///src.ts"),
+      ),
+    );
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "application/javascript; charset=UTF-8",
+    );
+  },
+});
+
+Deno.test({
+  name: "file server - serveDirWithTs (invalid url)",
+  async fn() {
+    const request = new Request("http://localhost/");
+    Object.defineProperty(request, "url", {
+      value: "http://",
+    });
+    const res = await serveDirWithTs(request, { quiet: true });
+    assertEquals(await res.text(), "Bad Request");
+    assertEquals(res.status, 400);
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "text/plain;charset=UTF-8",
+    );
+  },
+});

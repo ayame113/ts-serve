@@ -65,7 +65,7 @@ export async function serveDirWithTs(
 ): Promise<Response> {
   let pathname;
   try {
-    pathname = new URL(request.url).pathname;
+    pathname = new URL(request.url, "file:///").pathname;
   } catch {
     return await serveDir(request, options);
   }
