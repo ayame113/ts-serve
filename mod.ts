@@ -14,8 +14,10 @@ const tsType = new Set<string | undefined>(
   ["ts", ".ts", "mts", ".mts", "video/mp2t"],
 );
 const tsxType = new Set<string | undefined>(["tsx", ".tsx"]);
+const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
 const tsUrl = new URL("file:///src.ts");
 const tsxUrl = new URL("file:///src.tsx");
+const jsxUrl = new URL("file:///src.jsx");
 const jsContentType = contentType(".js")!;
 
 /**
@@ -40,6 +42,8 @@ export async function serveFileWithTs(
       return rewriteTsResponse(response, tsUrl);
     } else if (filePath.endsWith(".tsx")) {
       return rewriteTsResponse(response, tsxUrl);
+    } else if (filePath.endsWith(".jsx")) {
+      return rewriteTsResponse(response, jsxUrl);
     }
   }
   return response;
@@ -61,17 +65,19 @@ export async function serveDirWithTs(
 ): Promise<Response> {
   let pathname;
   try {
-    pathname = new URL(request.url).pathname;
+    pathname = new URL(request.url, "file:///").pathname;
   } catch {
     return await serveDir(request, options);
   }
-  const response = await serveDir(request);
+  const response = await serveDir(request, options);
   // if range request, skip
   if (response.status === 200) {
     if (pathname.endsWith(".ts")) {
       return rewriteTsResponse(response, tsUrl);
     } else if (pathname.endsWith(".tsx")) {
       return rewriteTsResponse(response, tsxUrl);
+    } else if (pathname.endsWith(".jsx")) {
+      return rewriteTsResponse(response, jsxUrl);
     }
   }
   return response;
@@ -123,11 +129,18 @@ export async function tsMiddleware(
     ? tsUrl
     : tsxType.has(ctx.response.type)
     ? tsxUrl
+    : jsxType.has(ctx.response.type)
+    ? jsxUrl
     : undefined;
 
   if (specifier) {
     if (ctx.response.body == null) {
       // skip
+    } else if (typeof ctx.response.body === "string") {
+      // major fast path
+      const tsCode = ctx.response.body;
+      const jsCode = await transpile(tsCode, specifier);
+      ctx.response.body = jsCode;
     } else if (ctx.response.body instanceof Uint8Array) {
       // major fast path
       const tsCode = decoder.decode(ctx.response.body);
