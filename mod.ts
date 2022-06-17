@@ -136,6 +136,11 @@ export async function tsMiddleware(
   if (specifier) {
     if (ctx.response.body == null) {
       // skip
+    } else if (typeof ctx.response.body === "string") {
+      // major fast path
+      const tsCode = ctx.response.body;
+      const jsCode = await transpile(tsCode, specifier);
+      ctx.response.body = jsCode;
     } else if (ctx.response.body instanceof Uint8Array) {
       // major fast path
       const tsCode = decoder.decode(ctx.response.body);

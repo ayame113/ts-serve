@@ -83,3 +83,71 @@ Deno.test({
     await abortServer();
   },
 });
+
+Deno.test({
+  name: "oak middleware - null response",
+  async fn() {
+    const app = new Application();
+    app.use(tsMiddleware);
+    app.use((ctx) => {
+      ctx.response.body = null;
+      ctx.response.type = ".ts";
+    });
+    const res = await app.handle(new Request("http://localhost/"));
+    assertEquals(await res!.text(), "");
+  },
+});
+
+Deno.test({
+  name: "oak middleware - string response",
+  async fn() {
+    const code = "function name(params:type) {}";
+    const app = new Application();
+    app.use(tsMiddleware);
+    app.use((ctx) => {
+      ctx.response.body = code;
+      ctx.response.type = ".ts";
+    });
+    const res = await app.handle(new Request("http://localhost/"));
+    assertEquals(
+      await res!.text(),
+      await transpile(code, new URL("file:///src.ts")),
+    );
+  },
+});
+
+Deno.test({
+  name: "oak middleware - u8 response",
+  async fn() {
+    const code = "function name(params:type) {}";
+    const app = new Application();
+    app.use(tsMiddleware);
+    app.use((ctx) => {
+      ctx.response.body = new TextEncoder().encode(code);
+      ctx.response.type = ".ts";
+    });
+    const res = await app.handle(new Request("http://localhost/"));
+    assertEquals(
+      await res!.text(),
+      await transpile(code, new URL("file:///src.ts")),
+    );
+  },
+});
+
+Deno.test({
+  name: "oak middleware - func response",
+  async fn() {
+    const code = "function name(params:type) {}";
+    const app = new Application();
+    app.use(tsMiddleware);
+    app.use((ctx) => {
+      ctx.response.body = () => code;
+      ctx.response.type = ".ts";
+    });
+    const res = await app.handle(new Request("http://localhost/"));
+    assertEquals(
+      await res!.text(),
+      await transpile(code, new URL("file:///src.ts")),
+    );
+  },
+});
