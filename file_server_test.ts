@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.143.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.144.0/testing/asserts.ts";
 import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
 import { serveDirWithTs, serveFileWithTs, transpile } from "./mod.ts";
 
