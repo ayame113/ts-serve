@@ -158,3 +158,5 @@ export async function tsMiddleware(
 }
 
 export { type ServeDirOptions, type ServeFileOptions, transpile };
+
+const a: string = 1;
