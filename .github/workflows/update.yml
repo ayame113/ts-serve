@@ -29,8 +29,6 @@ jobs:
           commit-message: "chore(deps): update deno dependencies"
           title: Update Deno Dependencies
           body: |-
-            [![Update Deno Dependencies](https://github.com/ayame113/ts-serve/actions/workflows/update.yml/badge.svg)](https://github.com/ayame113/ts-serve/actions/workflows/update.yml)
-
             Some external modules are stale.
             <details><summary>Details</summary><div>
 
@@ -42,7 +40,3 @@ jobs:
           branch: deno-udd
           author: GitHub <noreply@github.com>
           delete-branch: true
-      - name: run test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run test.yml
