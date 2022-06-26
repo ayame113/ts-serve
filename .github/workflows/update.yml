@@ -42,5 +42,5 @@ jobs:
           branch: deno-udd
           author: GitHub <noreply@github.com>
           delete-branch: true
-  test:
-    uses: ./.github/workflows/test.yml
+      - name: test
+        run: gh workflow run test.yml
