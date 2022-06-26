@@ -42,5 +42,7 @@ jobs:
           branch: deno-udd
           author: GitHub <noreply@github.com>
           delete-branch: true
-      - name: test
+      - name: run test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run test.yml
