@@ -43,4 +43,4 @@ jobs:
       - name: run test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run test.yml
+        run: gh workflow run test.yml --ref deno-udd
