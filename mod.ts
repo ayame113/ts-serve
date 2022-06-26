@@ -3,7 +3,7 @@ import {
   ServeDirOptions,
   serveFile,
   ServeFileOptions,
-} from "https://deno.land/std@0.144.0/http/file_server.ts";
+} from "https://deno.land/std@0.145.0/http/file_server.ts";
 import { contentType } from "https://deno.land/std@0.145.0/media_types/mod.ts";
 import type { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { convertBodyToBodyInit } from "https://deno.land/x/oak@v10.6.0/response.ts";
