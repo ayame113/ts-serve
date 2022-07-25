@@ -1,4 +1,4 @@
-import { emit } from "https://deno.land/x/emit@0.3.0/mod.ts";
+import { emit } from "https://deno.land/x/emit@0.4.0/mod.ts";
 
 /**
  * Transpile the given TypeScript code into JavaScript code.
