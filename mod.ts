@@ -1,8 +1,8 @@
 import {
   serveDir,
-  ServeDirOptions,
+  type ServeDirOptions,
   serveFile,
-  ServeFileOptions,
+  type ServeFileOptions,
 } from "https://deno.land/std@0.149.0/http/file_server.ts";
 import { contentType } from "https://deno.land/std@0.149.0/media_types/mod.ts";
 import type { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
