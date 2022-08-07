@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.149.0/testing/asserts.ts";
-import { serve } from "https://deno.land/std@0.149.0/http/mod.ts";
+import { assertEquals } from "https://deno.land/std@0.151.0/testing/asserts.ts";
+import { serve } from "https://deno.land/std@0.151.0/http/mod.ts";
 import { serveDirWithTs, serveFileWithTs, transpile } from "./mod.ts";
 
 Deno.test({

@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.149.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.151.0/testing/asserts.ts";
 import { transpile } from "./transpile.ts";
 
 const codes = [
@@ -22,7 +22,7 @@ const codes = [
   ],
   [
     "file:///src.jsx",
-    `import { render } from "https://esm.sh/react-dom@17.0.2";`,
+    `import { render } from "https://esm.sh/react-dom@18.3.0-next-e61fd91f5-20220630/";`,
     "//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9",
   ],
 ] as const;
