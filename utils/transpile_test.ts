@@ -20,6 +20,11 @@ const codes = [
     `const a = /*#__PURE__*/ React.createElement("a", null);
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vc3JjLmpzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBhID0gPGE+PC9hPiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLENBQUMsaUJBQUcsb0JBQUMsR0FBQyxPQUFLIn0=`,
   ],
+  [
+    "file:///src.jsx",
+    `import { render } from "https://esm.sh/react-dom@17.0.2";`,
+    "//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9",
+  ],
 ] as const;
 for (const [path, src, emit] of codes) {
   Deno.test({

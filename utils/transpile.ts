@@ -20,7 +20,12 @@ export async function transpile(content: string, specifier: URL) {
   const result = await emit(specifier, {
     load(specifier) {
       if (specifier !== urlStr) {
-        return Promise.resolve({ kind: "module", specifier, content: "" });
+        return Promise.resolve({
+          kind: "module",
+          specifier,
+          content: "",
+          headers: { "content-type": "application/javascript; charset=utf-8" },
+        });
       }
       return Promise.resolve({ kind: "module", specifier, content });
     },
