@@ -1,5 +1,17 @@
 import { emit } from "https://deno.land/x/emit@0.4.0/mod.ts";
 
+export enum MediaType {
+  TypeScript,
+  Jsx,
+  Tsx,
+}
+
+const contentType = {
+  [MediaType.TypeScript]: "text/typescript; charset=utf-8",
+  [MediaType.Jsx]: "text/jsx; charset=utf-8",
+  [MediaType.Tsx]: "text/tsx; charset=utf-8",
+};
+
 /**
  * Transpile the given TypeScript code into JavaScript code.
  *
@@ -15,7 +27,11 @@ import { emit } from "https://deno.land/x/emit@0.4.0/mod.ts";
  * ));
  * ```
  */
-export async function transpile(content: string, specifier: URL) {
+export async function transpile(
+  content: string,
+  specifier: URL,
+  mediaType?: MediaType,
+) {
   const urlStr = specifier.toString();
   const result = await emit(specifier, {
     load(specifier) {
@@ -27,7 +43,16 @@ export async function transpile(content: string, specifier: URL) {
           headers: { "content-type": "application/javascript; charset=utf-8" },
         });
       }
-      return Promise.resolve({ kind: "module", specifier, content });
+      return Promise.resolve({
+        kind: "module",
+        specifier,
+        content,
+        headers: {
+          "content-type": mediaType != undefined
+            ? contentType[mediaType]
+            : undefined!,
+        },
+      });
     },
   });
   return result[urlStr];

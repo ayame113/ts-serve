@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.151.0/testing/asserts.ts";
 import { deferred } from "https://deno.land/std@0.151.0/async/mod.ts";
 import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { transpile, tsMiddleware } from "./mod.ts";
+import { MediaType, transpile, tsMiddleware } from "./mod.ts";
 
 const port = 8888;
 const jsContentType = "application/javascript; charset=utf-8";
@@ -41,11 +41,7 @@ async function readTextFile(path: string) {
   return await Deno.readTextFile(new URL(path, import.meta.url));
 }
 async function transpileFile(path: string) {
-  const url = path.endsWith(".ts")
-    ? new URL("file:///src.ts")
-    : path.endsWith(".tsx")
-    ? new URL("file:///src.tsx")
-    : new URL("file:///src.jsx");
+  const url = new URL(path, `http://localhost:${port}`);
   return await transpile(await readTextFile(path), url);
 }
 
@@ -125,7 +121,7 @@ Deno.test({
     const res = await app.handle(new Request("http://localhost/"));
     assertEquals(
       await res!.text(),
-      await transpile(code, new URL("file:///src.ts")),
+      await transpile(code, new URL("http://localhost/"), MediaType.TypeScript),
     );
   },
 });
@@ -143,7 +139,7 @@ Deno.test({
     const res = await app.handle(new Request("http://localhost/"));
     assertEquals(
       await res!.text(),
-      await transpile(code, new URL("file:///src.ts")),
+      await transpile(code, new URL("http://localhost/"), MediaType.TypeScript),
     );
   },
 });
@@ -161,7 +157,7 @@ Deno.test({
     const res = await app.handle(new Request("http://localhost/"));
     assertEquals(
       await res!.text(),
-      await transpile(code, new URL("file:///src.ts")),
+      await transpile(code, new URL("http://localhost/"), MediaType.TypeScript),
     );
   },
 });

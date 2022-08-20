@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.151.0/testing/asserts.ts";
-import { transpile } from "./transpile.ts";
+import { MediaType, transpile } from "./transpile.ts";
 
 const codes = [
   [
@@ -34,3 +34,18 @@ for (const [path, src, emit] of codes) {
     },
   });
 }
+
+Deno.test({
+  name: `transpile - with no extension`,
+  async fn() {
+    assertEquals(
+      await transpile(
+        "function name(params:type) {}",
+        new URL("https://foo.com/bar"),
+        MediaType.TypeScript,
+      ),
+      `function name(params) {}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImh0dHBzOi8vZm9vLmNvbS9iYXIiXSwic291cmNlc0NvbnRlbnQiOlsiZnVuY3Rpb24gbmFtZShwYXJhbXM6dHlwZSkge30iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsU0FBUyxJQUFJLENBQUMsTUFBVyxFQUFFLEVBQUUifQ==`,
+    );
+  },
+});

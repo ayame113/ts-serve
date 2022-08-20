@@ -31,7 +31,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-          new URL("file:///src.ts"),
+          new URL("http://localhost:8886/mod.ts"),
         ),
       );
       assertEquals(
@@ -45,7 +45,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
-          new URL("file:///src.tsx"),
+          new URL("http://localhost:8886/test/a.tsx"),
         ),
       );
       assertEquals(
@@ -59,7 +59,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
-          new URL("file:///src.jsx"),
+          new URL("http://localhost:8886/test/a.jsx"),
         ),
       );
       assertEquals(
@@ -110,7 +110,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-          new URL("file:///src.ts"),
+          new URL("http://localhost:8887/mod.ts"),
         ),
       );
       assertEquals(
@@ -124,7 +124,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
-          new URL("file:///src.tsx"),
+          new URL("http://localhost:8887/test/a.tsx"),
         ),
       );
       assertEquals(
@@ -138,7 +138,7 @@ Deno.test({
         await res.text(),
         await transpile(
           await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
-          new URL("file:///src.jsx"),
+          new URL("http://localhost:8887/test/a.jsx"),
         ),
       );
       assertEquals(
@@ -198,7 +198,7 @@ Deno.test({
       await res.text(),
       await transpile(
         await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-        new URL("file:///src.ts"),
+        new URL("file:///mod.ts"),
       ),
     );
     assertEquals(

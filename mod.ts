@@ -7,7 +7,7 @@ import {
 import { contentType } from "https://deno.land/std@0.151.0/media_types/mod.ts";
 import type { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { convertBodyToBodyInit } from "https://deno.land/x/oak@v10.6.0/response.ts";
-import { transpile } from "./utils/transpile.ts";
+import { MediaType, transpile } from "./utils/transpile.ts";
 
 const decoder = new TextDecoder();
 const tsType = new Set<string | undefined>(
@@ -15,9 +15,6 @@ const tsType = new Set<string | undefined>(
 );
 const tsxType = new Set<string | undefined>(["tsx", ".tsx"]);
 const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
-const tsUrl = new URL("file:///src.ts");
-const tsxUrl = new URL("file:///src.tsx");
-const jsxUrl = new URL("file:///src.jsx");
 const jsContentType = contentType(".js")!;
 
 /**
@@ -36,14 +33,21 @@ export async function serveFileWithTs(
   options?: ServeFileOptions,
 ): Promise<Response> {
   const response = await serveFile(request, filePath, options);
+
+  let url;
+  try {
+    url = new URL(request.url, "file:///");
+  } catch {
+    return response;
+  }
   // if range request, skip
   if (response.status === 200) {
     if (filePath.endsWith(".ts")) {
-      return rewriteTsResponse(response, tsUrl);
+      return rewriteTsResponse(response, url);
     } else if (filePath.endsWith(".tsx")) {
-      return rewriteTsResponse(response, tsxUrl);
+      return rewriteTsResponse(response, url);
     } else if (filePath.endsWith(".jsx")) {
-      return rewriteTsResponse(response, jsxUrl);
+      return rewriteTsResponse(response, url);
     }
   }
   return response;
@@ -63,21 +67,22 @@ export async function serveDirWithTs(
   request: Request,
   options?: ServeDirOptions,
 ): Promise<Response> {
-  let pathname;
-  try {
-    pathname = new URL(request.url, "file:///").pathname;
-  } catch {
-    return await serveDir(request, options);
-  }
   const response = await serveDir(request, options);
+
+  let url;
+  try {
+    url = new URL(request.url, "file:///");
+  } catch {
+    return response;
+  }
   // if range request, skip
   if (response.status === 200) {
-    if (pathname.endsWith(".ts")) {
-      return rewriteTsResponse(response, tsUrl);
-    } else if (pathname.endsWith(".tsx")) {
-      return rewriteTsResponse(response, tsxUrl);
-    } else if (pathname.endsWith(".jsx")) {
-      return rewriteTsResponse(response, jsxUrl);
+    if (url.pathname.endsWith(".ts")) {
+      return rewriteTsResponse(response, url);
+    } else if (url.pathname.endsWith(".tsx")) {
+      return rewriteTsResponse(response, url);
+    } else if (url.pathname.endsWith(".jsx")) {
+      return rewriteTsResponse(response, url);
     }
   }
   return response;
@@ -125,36 +130,40 @@ export async function tsMiddleware(
   next: () => Promise<unknown>,
 ) {
   await next();
-  const specifier = tsType.has(ctx.response.type)
-    ? tsUrl
+  const mediaType = tsType.has(ctx.response.type)
+    ? MediaType.TypeScript
     : tsxType.has(ctx.response.type)
-    ? tsxUrl
+    ? MediaType.Tsx
     : jsxType.has(ctx.response.type)
-    ? jsxUrl
+    ? MediaType.Jsx
     : undefined;
 
-  if (specifier) {
-    if (ctx.response.body == null) {
-      // skip
-    } else if (typeof ctx.response.body === "string") {
-      // major fast path
-      const tsCode = ctx.response.body;
-      const jsCode = await transpile(tsCode, specifier);
-      ctx.response.body = jsCode;
-    } else if (ctx.response.body instanceof Uint8Array) {
-      // major fast path
-      const tsCode = decoder.decode(ctx.response.body);
-      const jsCode = await transpile(tsCode, specifier);
-      ctx.response.body = jsCode;
-    } else {
-      // fallback
-      const [responseInit] = await convertBodyToBodyInit(ctx.response.body);
-      const tsCode = await new Response(responseInit).text();
-      const jsCode = await transpile(tsCode, specifier);
-      ctx.response.body = jsCode;
-    }
-    ctx.response.type = ".js";
+  if (mediaType == undefined) {
+    return;
   }
+
+  const specifier = ctx.request.url;
+
+  if (ctx.response.body == null) {
+    // skip
+  } else if (typeof ctx.response.body === "string") {
+    // major fast path
+    const tsCode = ctx.response.body;
+    const jsCode = await transpile(tsCode, specifier, mediaType);
+    ctx.response.body = jsCode;
+  } else if (ctx.response.body instanceof Uint8Array) {
+    // major fast path
+    const tsCode = decoder.decode(ctx.response.body);
+    const jsCode = await transpile(tsCode, specifier, mediaType);
+    ctx.response.body = jsCode;
+  } else {
+    // fallback
+    const [responseInit] = await convertBodyToBodyInit(ctx.response.body);
+    const tsCode = await new Response(responseInit).text();
+    const jsCode = await transpile(tsCode, specifier, mediaType);
+    ctx.response.body = jsCode;
+  }
+  ctx.response.type = ".js";
 }
 
-export { type ServeDirOptions, type ServeFileOptions, transpile };
+export { MediaType, type ServeDirOptions, type ServeFileOptions, transpile };
