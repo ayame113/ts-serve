@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "test": "deno test --doc --parallel --shuffle --allow-net=deno.land --allow-read=.",
+    "test": "deno test --doc --parallel --shuffle --allow-net=deno.land,localhost,0.0.0.0 --allow-read=.",
     "check": "deno check ./mod.ts"
   },
   "importMap": "./import-map.json"
