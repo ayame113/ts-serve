@@ -7,6 +7,7 @@ export enum MediaType {
   Tsx,
 }
 
+// https://github.com/denoland/deno_ast/blob/ea1ccec37e1aa8e5e1e70f983a7ed1472d0e132a/src/media_type.rs#L117
 const contentType = {
   [MediaType.TypeScript]: "text/typescript; charset=utf-8",
   [MediaType.Jsx]: "text/jsx; charset=utf-8",
