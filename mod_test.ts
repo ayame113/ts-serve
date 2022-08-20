@@ -1,6 +1,5 @@
 import { assert } from "https://deno.land/std@0.152.0/testing/asserts.ts";
 import {
-  assertSpyCallArgs,
   assertSpyCalls,
   stub,
 } from "https://deno.land/std@0.152.0/testing/mock.ts";
