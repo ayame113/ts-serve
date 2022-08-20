@@ -14,8 +14,9 @@ const jsContentType = contentType(".js");
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.151.0/http/mod.ts";
- * import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { serveFileWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
+ * fourceInstantiateWasm();
  * serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
  */
