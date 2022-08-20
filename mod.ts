@@ -10,7 +10,7 @@ import { transpile } from "./utils/transpile.ts";
  * There is no need to call this function where performance is not important. In that case, the wasm file will be automatically loaded in about 3 seconds when you transpile for the first time.
  *
  * ```ts
- * import { serve } from "https://deno.land/std@0.151.0/http/mod.ts";
+ * import { serve } from "https://deno.land/std@0.152.0/http/mod.ts";
  * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * fourceInstantiateWasm();
