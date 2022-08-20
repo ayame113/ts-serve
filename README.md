@@ -75,6 +75,23 @@ import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 serve((request) => serveFileWithTs(request, "./mod.ts"));
 ```
 
+### fourceInstantiateWasm function
+
+Optionally, calling the `fourceInstantiateWasm` function before starting the
+server will force the wasm file to be read ahead. Otherwise the wasm file will
+take about 3 seconds to load the first time it is transpiled.
+
+```ts
+import { serve } from "https://deno.land/std@0.144.0/http/mod.ts";
+import {
+  fourceInstantiateWasm,
+  serveDirWithTs,
+} from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+
+fourceInstantiateWasm();
+serve((request) => serveDirWithTs(request));
+```
+
 ## develop
 
 ```shell
