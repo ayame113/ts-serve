@@ -38,16 +38,16 @@ export async function serveFileWithTs(
   try {
     url = new URL(request.url, "file:///");
   } catch {
-    return response;
+    url = new URL("file:///src");
   }
   // if range request, skip
   if (response.status === 200) {
     if (filePath.endsWith(".ts")) {
-      return rewriteTsResponse(response, url);
+      return rewriteTsResponse(response, url, MediaType.TypeScript);
     } else if (filePath.endsWith(".tsx")) {
-      return rewriteTsResponse(response, url);
+      return rewriteTsResponse(response, url, MediaType.Tsx);
     } else if (filePath.endsWith(".jsx")) {
-      return rewriteTsResponse(response, url);
+      return rewriteTsResponse(response, url, MediaType.Jsx);
     }
   }
   return response;
@@ -88,9 +88,13 @@ export async function serveDirWithTs(
   return response;
 }
 
-async function rewriteTsResponse(response: Response, url: URL) {
+async function rewriteTsResponse(
+  response: Response,
+  url: URL,
+  mediaType?: MediaType,
+) {
   const tsCode = await response.text();
-  const jsCode = await transpile(tsCode, url);
+  const jsCode = await transpile(tsCode, url, mediaType);
   const { headers } = response;
   headers.set("content-type", jsContentType);
   headers.delete("content-length");

@@ -1,6 +1,11 @@
 import { assertEquals } from "https://deno.land/std@0.151.0/testing/asserts.ts";
 import { serve } from "https://deno.land/std@0.151.0/http/mod.ts";
-import { serveDirWithTs, serveFileWithTs, transpile } from "./mod.ts";
+import {
+  MediaType,
+  serveDirWithTs,
+  serveFileWithTs,
+  transpile,
+} from "./mod.ts";
 
 Deno.test({
   name: "file server - serveFileWithTs",
@@ -87,6 +92,31 @@ Deno.test({
     assertEquals(
       res.headers.get("Content-Type"),
       "text/markdown; charset=UTF-8",
+    );
+  },
+});
+
+Deno.test({
+  name: "file server - serveFileWithTs (invalid url)",
+  async fn() {
+    const request = new Request("http://localhost/");
+    Object.defineProperty(request, "url", {
+      value: "http://",
+    });
+    // Determine file type from file path and don't give error
+    const res = await serveFileWithTs(request, "./mod.ts");
+    assertEquals(
+      await res.text(),
+      await transpile(
+        await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
+        new URL("file:///src"),
+        MediaType.TypeScript,
+      ),
+    );
+    assertEquals(res.status, 200);
+    assertEquals(
+      res.headers.get("Content-Type"),
+      "application/javascript; charset=UTF-8",
     );
   },
 });
