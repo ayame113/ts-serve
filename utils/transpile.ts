@@ -1,5 +1,6 @@
 import { emit } from "https://deno.land/x/emit@0.4.0/mod.ts";
 
+/** File type. You can pass it as an option to the transpile function to tell it what media type the source is. */
 export enum MediaType {
   TypeScript,
   Jsx,
@@ -16,14 +17,16 @@ const contentType = {
  * Transpile the given TypeScript code into JavaScript code.
  *
  * @param content TypeScript code
- * @param specifier URL like `new URL("file:///src.ts")` or `new URL("file:///src.tsx")`
+ * @param specifier The URL that will be used for the source map.
+ * @param mediaType Indicates whether the source code is TypeScript, JSX or TSX. If this argument is not passed, the file type is guessed using the extension of the URL passed as the second argument.
  * @return JavaScript code
  *
  * ```ts
- * import { transpile } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  * console.log(await transpile(
  *   "function name(params:type) {}",
- *   new URL("file:///src.ts")
+ *   new URL("file:///src.ts"),
+ *   MediaType.TypeScript,
  * ));
  * ```
  */
