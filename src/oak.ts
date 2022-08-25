@@ -1,5 +1,5 @@
-import type { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { convertBodyToBodyInit } from "https://deno.land/x/oak@v10.6.0/response.ts";
+import type { Context } from "https://deno.land/x/oak@v11.1.0/mod.ts";
+import { convertBodyToBodyInit } from "https://deno.land/x/oak@v11.1.0/response.ts";
 
 import { MediaType, transpile } from "../utils/transpile.ts";
 
@@ -14,7 +14,7 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
  * Oak middleware that rewrites TypeScript response to JavaScript response.
  *
  * ```ts
- * import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+ * import { Application } from "https://deno.land/x/oak@v11.1.0/mod.ts";
  * import { tsMiddleware, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
  * fourceInstantiateWasm();

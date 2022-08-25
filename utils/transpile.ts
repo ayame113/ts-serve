@@ -1,4 +1,4 @@
-import { emit } from "https://deno.land/x/emit@0.5.0/mod.ts";
+import { emit } from "https://deno.land/x/emit@0.7.0/mod.ts";
 
 /** File type. You can pass it as an option to the transpile function to tell it what media type the source is. */
 export enum MediaType {
