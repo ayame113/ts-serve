@@ -4,7 +4,7 @@ import {
   stub,
 } from "https://deno.land/std@0.153.0/testing/mock.ts";
 
-import { fourceInstantiateWasm, transpile } from "./mod.ts";
+import { fourceInstantiateWasm, MediaType, transpile } from "./mod.ts";
 
 Deno.test({
   name: "fourceInstantiateWasm",
@@ -14,6 +14,7 @@ Deno.test({
     await transpile(
       "function foo(arg: string): string {return arg}",
       new URL("file:///src.ts"),
+      MediaType.TypeScript,
     );
     const time = Date.now() - start;
     assert(time < 100, `transpile() took ${time} ms`);

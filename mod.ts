@@ -1,7 +1,7 @@
 export * from "./src/oak.ts";
 export * from "./src/file_server.ts";
 export * from "./utils/transpile.ts";
-import { transpile } from "./utils/transpile.ts";
+import { MediaType, transpile } from "./utils/transpile.ts";
 
 /**
  * **Calling this function has no effect whether it is called or not.**
@@ -19,6 +19,6 @@ import { transpile } from "./utils/transpile.ts";
  */
 export async function fourceInstantiateWasm() {
   try {
-    await transpile("", new URL("file:///src"));
+    await transpile("", new URL("file:///src"), MediaType.TypeScript);
   } catch (_) { /* ignore error*/ }
 }
