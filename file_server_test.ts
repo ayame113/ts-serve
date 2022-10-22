@@ -10,8 +10,6 @@ import {
   transpile,
 } from "./mod.ts";
 
-const port = 8886;
-
 async function readTextFile(path: string) {
   return await Deno.readTextFile(new URL(path, import.meta.url));
 }
@@ -46,7 +44,7 @@ Deno.test({
       throw new Error("unreachable");
     }, {
       signal: controller.signal,
-      port,
+      port: 8886,
       onListen() {},
     });
 
@@ -98,7 +96,7 @@ Deno.test({
     );
     assertEquals(
       await res.text(),
-      await Deno.readTextFile(new URL("./README.md", import.meta.url)),
+      await readTextFile("./README.md"),
     );
     assertEquals(
       res.headers.get("Content-Type"),
@@ -189,7 +187,7 @@ Deno.test({
     );
     assertEquals(
       await res.text(),
-      await Deno.readTextFile(new URL("./README.md", import.meta.url)),
+      await readTextFile("./README.md"),
     );
     assertEquals(
       res.headers.get("Content-Type"),
