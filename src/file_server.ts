@@ -24,7 +24,7 @@ export async function serveFileWithTs(
   options?: ServeFileOptions,
 ): Promise<Response> {
   const response = await serveFile(request, filePath, options);
-  return await transpileResponse(request, response, filePath);
+  return await transpileResponse(response, request.url, filePath);
 }
 
 /**
@@ -43,7 +43,7 @@ export async function serveDirWithTs(
   options?: ServeDirOptions,
 ): Promise<Response> {
   const response = await serveDir(request, options);
-  return await transpileResponse(request, response);
+  return await transpileResponse(response, request.url);
 }
 
 export { type ServeDirOptions, type ServeFileOptions };

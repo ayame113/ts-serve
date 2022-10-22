@@ -3,12 +3,32 @@ import { MediaType, transpile } from "../utils/transpile.ts";
 
 const jsContentType = contentType(".js");
 
+/**
+ * Transpile the body of the response and return a new response.
+ *
+ * ```ts
+ * import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
+ * import { serveFile } from "https://deno.land/std@0.153.0/http/file_server.ts";
+ *
+ * import { transpileResponse } from "https://deno.land/x/ts_serve@$VERSION/utils/transpile_response.ts"
+ *
+ * serve(async (request) => {
+ *   const filePath = "./mod.ts";
+ *   const response = await serveFile(request, filePath);
+ *   return await transpileResponse(response, request.url, filePath);
+ * });
+ * ```
+ *
+ * @param  response The response you want to transpile
+ * @param  requestUrl The URL used to construct the source map URL
+ * @param  filepath If specified, the file path extension is used to determine the file type.
+ */
 export async function transpileResponse(
-  request: Request,
   response: Response,
+  requestUrl: string,
   filepath?: string,
 ): Promise<Response> {
-  const url = new URL(`ts-serve:///${request.url}`);
+  const url = new URL(`ts-serve:///${requestUrl}`);
   // if range request, skip
   if (response.status !== 200) {
     return response;

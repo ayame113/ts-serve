@@ -5,8 +5,8 @@ Deno.test({
   name: "transpileResponse - ts",
   async fn() {
     const response = await transpileResponse(
-      new Request("https://aaa/main.ts?aaa=.foo"),
       new Response("const a: string = 'a';"),
+      "https://aaa/main.ts?aaa=.foo",
       "main.ts",
     );
     assertEquals(
@@ -21,8 +21,8 @@ Deno.test({
   name: "transpileResponse - no transpile",
   async fn() {
     const response = await transpileResponse(
-      new Request("https://aaa/index.html?aaa=.ts"),
       new Response("hey!"),
+      "https://aaa/index.html?aaa=.ts",
     );
     assertEquals(await response.text(), "hey!");
   },
@@ -32,8 +32,8 @@ Deno.test({
   name: "transpileResponse - specify filepath",
   async fn() {
     const response = await transpileResponse(
-      new Request("https://aaa/index.html?aaa=.ts"),
       new Response("const a: string = 'a';"),
+      "https://aaa/index.html?aaa=.ts",
       "foo.ts",
     );
     assertEquals(
