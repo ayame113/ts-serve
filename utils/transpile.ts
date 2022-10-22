@@ -33,13 +33,13 @@ const contentType = {
  */
 export async function transpile(
   content: string,
-  specifier: URL,
-  mediaType?: MediaType,
+  targetUrl: URL,
+  mediaType: MediaType,
 ) {
-  const urlStr = specifier.toString();
-  const result = await emit(specifier, {
+  const targetUrlStr = targetUrl.toString();
+  const result = await emit(targetUrl, {
     load(specifier) {
-      if (specifier !== urlStr) {
+      if (specifier !== targetUrlStr) {
         return Promise.resolve({
           kind: "module",
           specifier,
@@ -52,12 +52,10 @@ export async function transpile(
         specifier,
         content,
         headers: {
-          "content-type": mediaType != undefined
-            ? contentType[mediaType]
-            : undefined!,
+          "content-type": contentType[mediaType],
         },
       });
     },
   });
-  return result[urlStr];
+  return result[targetUrlStr];
 }

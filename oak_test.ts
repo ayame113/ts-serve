@@ -1,4 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.153.0/testing/asserts.ts";
+import {
+  assertEquals,
+  fail,
+} from "https://deno.land/std@0.153.0/testing/asserts.ts";
 import { deferred } from "https://deno.land/std@0.153.0/async/mod.ts";
 import { Application } from "https://deno.land/x/oak@v11.1.0/mod.ts";
 import { MediaType, transpile, tsMiddleware } from "./mod.ts";
@@ -42,7 +45,14 @@ async function readTextFile(path: string) {
 }
 async function transpileFile(path: string) {
   const url = new URL(path, `http://localhost:${port}`);
-  return await transpile(await readTextFile(path), url);
+  const mediaType = path.endsWith(".ts")
+    ? MediaType.TypeScript
+    : path.endsWith(".tsx")
+    ? MediaType.Tsx
+    : path.endsWith(".jsx")
+    ? MediaType.Jsx
+    : fail("unknown extension");
+  return await transpile(await readTextFile(path), url, mediaType);
 }
 
 Deno.test({

@@ -1,4 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.153.0/testing/asserts.ts";
+import {
+  assertEquals,
+  fail,
+} from "https://deno.land/std@0.153.0/testing/asserts.ts";
 import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
 import {
   MediaType,
@@ -6,6 +9,23 @@ import {
   serveFileWithTs,
   transpile,
 } from "./mod.ts";
+
+const port = 8886;
+
+async function readTextFile(path: string) {
+  return await Deno.readTextFile(new URL(path, import.meta.url));
+}
+async function transpileFile(path: string, requestUrl: string) {
+  const url = new URL(`ts-serve:///${requestUrl}`);
+  const mediaType = path.endsWith(".ts")
+    ? MediaType.TypeScript
+    : path.endsWith(".tsx")
+    ? MediaType.Tsx
+    : path.endsWith(".jsx")
+    ? MediaType.Jsx
+    : fail("unknown extension");
+  return await transpile(await readTextFile(path), url, mediaType);
+}
 
 Deno.test({
   name: "file server - serveFileWithTs",
@@ -26,7 +46,7 @@ Deno.test({
       throw new Error("unreachable");
     }, {
       signal: controller.signal,
-      port: 8886,
+      port,
       onListen() {},
     });
 
@@ -34,10 +54,7 @@ Deno.test({
       const res = await fetch("http://localhost:8886/mod.ts");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-          new URL("http://localhost:8886/mod.ts"),
-        ),
+        await transpileFile("./mod.ts", "http://localhost:8886/mod.ts"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -48,10 +65,7 @@ Deno.test({
       const res = await fetch("http://localhost:8886/test/a.tsx");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
-          new URL("http://localhost:8886/test/a.tsx"),
-        ),
+        await transpileFile("./test/a.tsx", "http://localhost:8886/test/a.tsx"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -62,10 +76,7 @@ Deno.test({
       const res = await fetch("http://localhost:8886/test/a.jsx");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
-          new URL("http://localhost:8886/test/a.jsx"),
-        ),
+        await transpileFile("./test/a.jsx", "http://localhost:8886/test/a.jsx"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -103,15 +114,11 @@ Deno.test({
     Object.defineProperty(request, "url", {
       value: "http://",
     });
-    // Determine file type from file path and don't give error
+    // Determine file type from file path and don't throw error
     const res = await serveFileWithTs(request, "./mod.ts");
     assertEquals(
       await res.text(),
-      await transpile(
-        await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-        new URL("file:///src"),
-        MediaType.TypeScript,
-      ),
+      await transpileFile("./mod.ts", "http://"),
     );
     assertEquals(res.status, 200);
     assertEquals(
@@ -138,10 +145,7 @@ Deno.test({
       const res = await fetch("http://localhost:8887/mod.ts");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-          new URL("http://localhost:8887/mod.ts"),
-        ),
+        await transpileFile("./mod.ts", "http://localhost:8887/mod.ts"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -152,10 +156,7 @@ Deno.test({
       const res = await fetch("http://localhost:8887/test/a.tsx");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./test/a.tsx", import.meta.url)),
-          new URL("http://localhost:8887/test/a.tsx"),
-        ),
+        await transpileFile("./test/a.tsx", "http://localhost:8887/test/a.tsx"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -166,10 +167,7 @@ Deno.test({
       const res = await fetch("http://localhost:8887/test/a.jsx");
       assertEquals(
         await res.text(),
-        await transpile(
-          await Deno.readTextFile(new URL("./test/a.jsx", import.meta.url)),
-          new URL("http://localhost:8887/test/a.jsx"),
-        ),
+        await transpileFile("./test/a.jsx", "http://localhost:8887/test/a.jsx"),
       );
       assertEquals(
         res.headers.get("Content-Type"),
@@ -226,10 +224,7 @@ Deno.test({
     const res = await serveDirWithTs(request, { quiet: true });
     assertEquals(
       await res.text(),
-      await transpile(
-        await Deno.readTextFile(new URL("./mod.ts", import.meta.url)),
-        new URL("file:///mod.ts"),
-      ),
+      await transpileFile("./mod.ts", "/mod.ts"),
     );
     assertEquals(
       res.headers.get("Content-Type"),

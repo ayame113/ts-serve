@@ -3,34 +3,38 @@ import { MediaType, transpile } from "./transpile.ts";
 
 const codes = [
   [
+    MediaType.TypeScript,
     "file:///src.ts",
     "function name(params:type) {}",
     `function name(params) {}
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vc3JjLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImZ1bmN0aW9uIG5hbWUocGFyYW1zOnR5cGUpIHt9Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFNBQVMsSUFBSSxDQUFDLE1BQVcsRUFBRSxFQUFFIn0=`,
   ],
   [
+    MediaType.Tsx,
     "file:///src.tsx",
     "const a = <a></a>",
     `const a = /*#__PURE__*/ React.createElement("a", null);
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vc3JjLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBhID0gPGE+PC9hPiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLENBQUMsaUJBQUcsb0JBQUMsR0FBQyxPQUFLIn0=`,
   ],
   [
+    MediaType.Jsx,
     "file:///src.jsx",
     "const a = <a></a>",
     `const a = /*#__PURE__*/ React.createElement("a", null);
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vc3JjLmpzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBhID0gPGE+PC9hPiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLENBQUMsaUJBQUcsb0JBQUMsR0FBQyxPQUFLIn0=`,
   ],
   [
+    MediaType.Jsx,
     "file:///src.jsx",
     `import { render } from "https://esm.sh/react-dom@18.3.0-next-e61fd91f5-20220630/";`,
     "//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9",
   ],
 ] as const;
-for (const [path, src, emit] of codes) {
+for (const [mediaType, path, src, emit] of codes) {
   Deno.test({
     name: `transpile - '${src}'`,
     async fn() {
-      assertEquals(await transpile(src, new URL(path)), emit);
+      assertEquals(await transpile(src, new URL(path), mediaType), emit);
     },
   });
 }
