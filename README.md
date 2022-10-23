@@ -75,6 +75,20 @@ import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 serve((request) => serveFileWithTs(request, "./mod.ts"));
 ```
 
+As [Hono](https://honojs.dev/)'s handler:
+
+```ts
+import { serve } from "https://deno.land/std@0.159.0/http/server.ts";
+import { Hono } from "https://deno.land/x/hono@v2.2.5/mod.ts";
+import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+
+const app = new Hono();
+app.get("*", (c) => {
+  return serveDirWithTs(c.req);
+});
+serve(app.fetch);
+```
+
 ### fourceInstantiateWasm function
 
 Optionally, calling the `fourceInstantiateWasm` function before starting the
