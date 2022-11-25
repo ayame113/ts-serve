@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.153.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.166.0/testing/asserts.ts";
 import { MediaType, transpile } from "./transpile.ts";
 
 const codes = [
@@ -26,7 +26,7 @@ const codes = [
   [
     MediaType.Jsx,
     "file:///src.jsx",
-    `import { render } from "https://esm.sh/react-dom@18.3.0-next-e61fd91f5-20220630/";`,
+    `import { render } from "https://esm.sh/react-dom@18.3.0-next-fecc288b7-20221025/";`,
     "//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9",
   ],
 ] as const;
