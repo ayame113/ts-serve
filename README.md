@@ -8,7 +8,7 @@ TypeScript + ES Modules
 Transpile TypeScript on the fly and serve it from your server as ES Modules.
 
 ```ts
-import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
+import { serve } from "https://deno.land/std@0.166.0/http/mod.ts";
 import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveDirWithTs(request));
@@ -54,22 +54,22 @@ await app.listen({ port: 8000 });
 ```
 
 As a replacement for the
-[serveDir](https://doc.deno.land/https://deno.land/std@0.153.0/http/file_server.ts/~/serveDir)
+[serveDir](https://doc.deno.land/https://deno.land/std@0.166.0/http/file_server.ts/~/serveDir)
 function in the Deno standard library:
 
 ```ts
-import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
+import { serve } from "https://deno.land/std@0.166.0/http/mod.ts";
 import { serveDirWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveDirWithTs(request));
 ```
 
 As a replacement for the
-[serveFile](https://doc.deno.land/https://deno.land/std@0.153.0/http/file_server.ts/~/serveFile)
+[serveFile](https://doc.deno.land/https://deno.land/std@0.166.0/http/file_server.ts/~/serveFile)
 function in the Deno standard library:
 
 ```ts
-import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
+import { serve } from "https://deno.land/std@0.166.0/http/mod.ts";
 import { serveFileWithTs } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
 
 serve((request) => serveFileWithTs(request, "./mod.ts"));
@@ -96,7 +96,7 @@ server will force the wasm file to be read ahead. Otherwise the wasm file will
 take about 3 seconds to load the first time it is transpiled.
 
 ```ts
-import { serve } from "https://deno.land/std@0.153.0/http/mod.ts";
+import { serve } from "https://deno.land/std@0.166.0/http/mod.ts";
 import {
   fourceInstantiateWasm,
   serveDirWithTs,
