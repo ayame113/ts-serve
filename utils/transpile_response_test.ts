@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.166.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 import { transpileResponse } from "./transpile_response.ts";
 
 Deno.test({
