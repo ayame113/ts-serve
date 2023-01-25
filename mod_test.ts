@@ -1,8 +1,8 @@
-import { assert } from "https://deno.land/std@0.166.0/testing/asserts.ts";
+import { assert } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 import {
   assertSpyCalls,
   stub,
-} from "https://deno.land/std@0.166.0/testing/mock.ts";
+} from "https://deno.land/std@0.173.0/testing/mock.ts";
 
 import { fourceInstantiateWasm, MediaType, transpile } from "./mod.ts";
 
