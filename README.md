@@ -89,11 +89,15 @@ app.get("*", (c) => {
 serve(app.fetch);
 ```
 
-### fourceInstantiateWasm function
+#### `fourceInstantiateWasm` function
 
-Optionally, calling the `fourceInstantiateWasm` function before starting the
-server will force the wasm file to be read ahead. Otherwise the wasm file will
-take about 3 seconds to load the first time it is transpiled.
+Calling this function will load the wasm file used in the deno_emit of the
+dependency. Even if you don't call this function, if you call the transpile
+function, the wasm file will be read automatically at that timing.
+
+However, performance can be an issue on the server as loading the wasm file
+takes time. In that case, calling this function in advance can speed up later
+calls to the transpile function.
 
 ```ts
 import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
@@ -102,6 +106,7 @@ import {
   serveDirWithTs,
 } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
 
+// load the wasm file in the background when the server starts.
 fourceInstantiateWasm();
 serve((request) => serveDirWithTs(request));
 ```
