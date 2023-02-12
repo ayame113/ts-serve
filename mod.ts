@@ -4,15 +4,16 @@ export * from "./utils/transpile.ts";
 import { MediaType, transpile } from "./utils/transpile.ts";
 
 /**
- * **Calling this function has no effect whether it is called or not.**
- * Calling this function will force the loading of the wasm file used internally.
- * For performance sensitive servers, etc., call this function first to tell it to load wasm.
- * There is no need to call this function where performance is not important. In that case, the wasm file will be automatically loaded in about 3 seconds when you transpile for the first time.
+ * Calling this function will load the wasm file used in the deno_emit of the dependency.
+ * Even if you don't call this function, if you call the transpile function, the wasm file will be read automatically at that timing.
+ * However, performance can be an issue on the server as loading the wasm file takes time.
+ * In that case, calling this function in advance can speed up later calls to the transpile function.
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.173.0/http/mod.ts";
  * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
  *
+ * // load the wasm file in the background when the server starts.
  * fourceInstantiateWasm();
  * serve((request) => serveDirWithTs(request));
  * ```
