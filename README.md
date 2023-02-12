@@ -95,10 +95,9 @@ Calling this function will load the wasm file used in the deno_emit of the
 dependency. Even if you don't call this function, if you call the transpile
 function, the wasm file will be read automatically at that timing.
 
-However,
-performance can be an issue on the server as loading the wasm file takes time.
-In that case, calling this function in advance can speed up later calls to the
-transpile function.
+However, performance can be an issue on the server as loading the wasm file
+takes time. In that case, calling this function in advance can speed up later
+calls to the transpile function.
 
 ```ts
 import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
