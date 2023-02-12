@@ -12,7 +12,7 @@ import { transpileResponse } from "../utils/transpile_response.ts";
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
- * import { serveFileWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { serveFileWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  *
  * fourceInstantiateWasm();
  * serve((request) => serveFileWithTs(request, "./mod.ts"));
@@ -32,7 +32,7 @@ export async function serveFileWithTs(
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
- * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  *
  * fourceInstantiateWasm();
  * serve((request) => serveDirWithTs(request));

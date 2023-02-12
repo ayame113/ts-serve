@@ -23,7 +23,7 @@ const contentType = {
  * @return JavaScript code
  *
  * ```ts
- * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  * console.log(await transpile(
  *   "function name(params:type) {}",
  *   new URL("file:///src.ts"),

@@ -15,7 +15,7 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
  *
  * ```ts
  * import { Application } from "https://deno.land/x/oak@v11.1.0/mod.ts";
- * import { tsMiddleware, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { tsMiddleware, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  *
  * fourceInstantiateWasm();
  * const app = new Application();

@@ -11,7 +11,7 @@ import { MediaType, transpile } from "./utils/transpile.ts";
  *
  * ```ts
  * import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
- * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  *
  * // load the wasm file in the background when the server starts.
  * fourceInstantiateWasm();
