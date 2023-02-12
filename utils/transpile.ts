@@ -1,4 +1,4 @@
-import { emit } from "https://deno.land/x/emit@0.14.0/mod.ts";
+import { emit } from "https://deno.land/x/emit@0.15.0/mod.ts";
 
 /** File type. You can pass it as an option to the transpile function to tell it what media type the source is. */
 export enum MediaType {
@@ -23,7 +23,7 @@ const contentType = {
  * @return JavaScript code
  *
  * ```ts
- * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$VERSION/mod.ts";
+ * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
  * console.log(await transpile(
  *   "function name(params:type) {}",
  *   new URL("file:///src.ts"),

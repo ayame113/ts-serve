@@ -1,4 +1,4 @@
-import { contentType } from "https://deno.land/std@0.173.0/media_types/mod.ts";
+import { contentType } from "https://deno.land/std@0.177.0/media_types/mod.ts";
 import { MediaType, transpile } from "../utils/transpile.ts";
 
 const jsContentType = contentType(".js");
@@ -7,10 +7,10 @@ const jsContentType = contentType(".js");
  * Transpile the body of the response and return a new response.
  *
  * ```ts
- * import { serve } from "https://deno.land/std@0.173.0/http/mod.ts";
- * import { serveFile } from "https://deno.land/std@0.173.0/http/file_server.ts";
+ * import { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
+ * import { serveFile } from "https://deno.land/std@0.177.0/http/file_server.ts";
  *
- * import { transpileResponse } from "https://deno.land/x/ts_serve@$VERSION/utils/transpile_response.ts"
+ * import { transpileResponse } from "https://deno.land/x/ts_serve@$MODULE_VERSION/utils/transpile_response.ts"
  *
  * serve(async (request) => {
  *   const filePath = "./mod.ts";
