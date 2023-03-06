@@ -1,8 +1,8 @@
 import {
   assertEquals,
   fail,
-} from "https://deno.land/std@0.177.0/testing/asserts.ts";
-import { deferred } from "https://deno.land/std@0.177.0/async/mod.ts";
+} from "https://deno.land/std@0.178.0/testing/asserts.ts";
+import { deferred } from "https://deno.land/std@0.178.0/async/mod.ts";
 import { Application } from "https://deno.land/x/oak@v11.1.0/mod.ts";
 import { MediaType, transpile, tsMiddleware } from "./mod.ts";
 
