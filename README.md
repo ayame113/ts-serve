@@ -84,7 +84,7 @@ import { serveDirWithTs } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod
 
 const app = new Hono();
 app.get("*", (c) => {
-  return serveDirWithTs(c.req);
+  return serveDirWithTs(c.req.raw);
 });
 serve(app.fetch);
 ```
