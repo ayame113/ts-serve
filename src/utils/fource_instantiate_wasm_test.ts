@@ -4,7 +4,8 @@ import {
   stub,
 } from "https://deno.land/std@0.178.0/testing/mock.ts";
 
-import { fourceInstantiateWasm, MediaType, transpile } from "./mod.ts";
+import { MediaType, transpile } from "./transpile.ts";
+import { fourceInstantiateWasm } from "./fource_instantiate_wasm.ts";
 
 Deno.test({
   name: "fourceInstantiateWasm",
