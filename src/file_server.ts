@@ -5,7 +5,7 @@ import {
   type ServeFileOptions,
 } from "https://deno.land/std@0.178.0/http/file_server.ts";
 
-import { transpileResponse } from "../utils/transpile_response.ts";
+import { transpileResponse } from "./utils/transpile_response.ts";
 
 /**
  * This can be used in the same way as the [serveFile](https://doc.deno.land/https://deno.land/std@0.178.0/http/file_server.ts/~/serveFile) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.

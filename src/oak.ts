@@ -1,7 +1,7 @@
 import type { Context } from "https://deno.land/x/oak@v12.0.1/mod.ts";
 import { convertBodyToBodyInit } from "https://deno.land/x/oak@v12.0.1/response.ts";
 
-import { MediaType, transpile } from "../utils/transpile.ts";
+import { MediaType, transpile } from "./utils/transpile.ts";
 
 const decoder = new TextDecoder();
 const tsType = new Set<string | undefined>(

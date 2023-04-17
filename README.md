@@ -1,7 +1,14 @@
-# ts-serve
+# jit-server
 
 [![Test](https://github.com/ayame113/ts-serve/actions/workflows/test.yml/badge.svg)](https://github.com/ayame113/ts-serve/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/ayame113/ts-serve/branch/main/graph/badge.svg?token=mz0SfmUYRL)](https://codecov.io/gh/ayame113/ts-serve)
+
+**jit-server** is a file server with just-in-time compilation.
+
+> **Note** Up until version 2, this library was a specialized server for
+> transpiling TypeScript to JavaScript, called ts-serve.
+
+# ts-serve
 
 TypeScript + ES Modules
 

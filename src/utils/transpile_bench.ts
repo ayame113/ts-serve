@@ -1,4 +1,4 @@
-import { MediaType, transpile } from "../mod.ts";
+import { MediaType, transpile } from "../../mod.ts";
 
 const codes = ["function name(params:type) {}"];
 const url = new URL("file:///src.ts");

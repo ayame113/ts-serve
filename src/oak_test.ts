@@ -4,7 +4,8 @@ import {
 } from "https://deno.land/std@0.178.0/testing/asserts.ts";
 import { deferred } from "https://deno.land/std@0.178.0/async/mod.ts";
 import { Application } from "https://deno.land/x/oak@v12.0.1/mod.ts";
-import { MediaType, transpile, tsMiddleware } from "./mod.ts";
+import { tsMiddleware } from "./oak.ts";
+import { MediaType, transpile } from "./utils/transpile.ts";
 
 const port = 8888;
 const jsContentType = "application/javascript; charset=UTF-8";
