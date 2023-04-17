@@ -10,7 +10,7 @@ const jsContentType = contentType(".js");
  * import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
  * import { serveFile } from "https://deno.land/std@0.178.0/http/file_server.ts";
  *
- * import { transpileResponse } from "https://deno.land/x/ts_serve@$MODULE_VERSION/utils/transpile_response.ts"
+ * import { transpileResponse } from "https://deno.land/x/ts_serve@$MODULE_VERSION/src/utils/transpile_response.ts"
  *
  * serve(async (request) => {
  *   const filePath = "./mod.ts";
