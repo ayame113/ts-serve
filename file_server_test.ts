@@ -1,8 +1,8 @@
 import {
   assertEquals,
   fail,
-} from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
+} from "https://deno.land/std@0.220.1/testing/asserts.ts";
+import { serve } from "https://deno.land/std@0.220.1/http/mod.ts";
 import {
   MediaType,
   serveDirWithTs,
