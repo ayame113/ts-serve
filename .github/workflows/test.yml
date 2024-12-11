@@ -9,9 +9,9 @@ jobs:
       - name: Git Checkout Module
         uses: actions/checkout@v2
       - name: Use Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
       - name: 😉 Format
         run: deno fmt --check
       - name: 😋 Lint
@@ -22,9 +22,9 @@ jobs:
       - name: Git Checkout Module
         uses: actions/checkout@v2
       - name: Use Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
       - name: 🧐 Type Check
         run: deno task check
   Test:
@@ -33,9 +33,9 @@ jobs:
       - name: Git Checkout Module
         uses: actions/checkout@v2
       - name: Use Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
       - name: 😎 Test
         run: deno task test --coverage=coverage
       - name: Create coverage report

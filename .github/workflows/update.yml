@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: denoland/setup-deno@v1
+      - uses: denoland/setup-deno@v2
       - name: run deno-udd
         id: run-deno-udd
         env:
