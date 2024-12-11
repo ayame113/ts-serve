@@ -23,7 +23,7 @@ const codes = [
   [
     MediaType.Jsx,
     "file:///src.jsx",
-    `import { render } from "https://esm.sh/react-dom@18.3.0-next-fecc288b7-20221025/";`,
+    `import { render } from "https://esm.sh/react-dom@19.0.0/";`,
     "",
   ],
 ] as const;
