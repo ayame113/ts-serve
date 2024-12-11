@@ -30,6 +30,7 @@ const contentType = {
  *   MediaType.TypeScript,
  * ));
  * ```
+ * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function transpile(
   content: string,

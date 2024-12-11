@@ -17,6 +17,7 @@ import { transpileResponse } from "../utils/transpile_response.ts";
  * fourceInstantiateWasm();
  * serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
+ * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function serveFileWithTs(
   request: Request,
@@ -37,6 +38,7 @@ export async function serveFileWithTs(
  * fourceInstantiateWasm();
  * serve((request) => serveDirWithTs(request));
  * ```
+ * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function serveDirWithTs(
   request: Request,
