@@ -44,7 +44,7 @@ export async function transpile(
   targetUrl: URL,
   mediaType: MediaType,
   options: TranspileOptions = {},
-) {
+): Promise<string> {
   const targetUrlStr = targetUrl.toString();
   const result = await emit(targetUrl, {
     load(specifier) {

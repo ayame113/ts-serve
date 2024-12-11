@@ -1,6 +1,10 @@
-import type { Context, Response as OakResponse } from "@oak/oak";
+import type { Context, Middleware } from "@oak/oak";
 
-import { MediaType, transpile, TranspileOptions } from "../utils/transpile.ts";
+import {
+  MediaType,
+  transpile,
+  type TranspileOptions,
+} from "../utils/transpile.ts";
 
 const decoder = new TextDecoder();
 const tsType = new Set<string | undefined>(
@@ -33,7 +37,9 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
  * await app.listen({ port: 8000 });
  * ```
  */
-export function createTsMiddleware(transpileOptions?: TranspileOptions) {
+export function createTsMiddleware(
+  transpileOptions?: TranspileOptions,
+): Middleware {
   return async function tsMiddleware(
     ctx: Context,
     next: () => Promise<unknown>,
@@ -124,5 +130,5 @@ export function createTsMiddleware(transpileOptions?: TranspileOptions) {
  * await app.listen({ port: 8000 });
  * ```
  */
-export const tsMiddleware = createTsMiddleware();
+export const tsMiddleware: Middleware = createTsMiddleware();
 export type { TranspileOptions };
