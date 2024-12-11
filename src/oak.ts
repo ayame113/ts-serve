@@ -16,7 +16,7 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
 /**
  * Oak middleware that rewrites TypeScript response to JavaScript response (with transpile config).
  *
- * ```ts
+ * ```ts ignore
  * import { Application } from "@oak/oak";
  * import { createTsMiddleware, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
@@ -109,7 +109,7 @@ export function createTsMiddleware(
 /**
  * Oak middleware that rewrites TypeScript response to JavaScript response.
  *
- * ```ts
+ * ```ts ignore
  * import { Application } from "@oak/oak";
  * import { tsMiddleware, forceInstantiateWasm } from "@ayame113/ts-serve";
  *

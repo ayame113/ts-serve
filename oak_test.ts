@@ -35,6 +35,7 @@ async function startServer() {
   app.addEventListener("listen", (e) => {
     listener.resolve(e);
   });
+  // deno-lint-ignore no-unused-vars
   const server = app.listen({ port, signal: killSignal.signal });
   await listener.promise;
 

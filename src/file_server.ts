@@ -6,12 +6,12 @@ import {
 } from "@std/http/file-server";
 
 import { transpileResponse } from "../utils/transpile_response.ts";
-import { TranspileOptions } from "../utils/transpile.ts";
+import type { TranspileOptions } from "../utils/transpile.ts";
 
 /**
  * This can be used in the same way as the [serveFile](https://jsr.io/@std/http/doc/~/serveFile) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
- * ```ts
+ * ```ts ignore
  * import { serveFileWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
  * forceInstantiateWasm();
@@ -36,7 +36,7 @@ export async function serveFileWithTs(
 /**
  * This can be used in the same way as the [serveDir](https://jsr.io/@std/http/doc/~/serveDir) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
- * ```ts
+ * ```ts ignore
  * import { serveDirWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
  * forceInstantiateWasm();
@@ -57,4 +57,4 @@ export async function serveDirWithTs(
   );
 }
 
-export { type ServeDirOptions, type ServeFileOptions, type TranspileOptions };
+export type { ServeDirOptions, ServeFileOptions, TranspileOptions };

@@ -1,12 +1,12 @@
 import { contentType } from "@std/media-types";
-import { MediaType, transpile, TranspileOptions } from "./transpile.ts";
+import { MediaType, transpile, type TranspileOptions } from "./transpile.ts";
 
 const jsContentType = contentType(".js");
 
 /**
  * Transpile the body of the response and return a new response.
  *
- * ```ts
+ * ```ts ignore
  * import { serveFile } from "@std/http/file-server";
  *
  * import { transpileResponse } from "@ayame113/ts-serve/utils/transpile_response.ts"

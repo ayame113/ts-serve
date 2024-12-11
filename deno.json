@@ -15,6 +15,7 @@
     "@std/http": "jsr:@std/http@^1.0.12",
     "@std/media-types": "jsr:@std/media-types@^1.1.0",
     "@std/testing": "jsr:@std/testing@^1.0.6",
-    "@ayame113/ts-serve": "./"
+    "@ayame113/ts-serve": "./mod.ts",
+    "@ayame113/ts-serve/": "./"
   }
 }
