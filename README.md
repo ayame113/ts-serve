@@ -7,7 +7,7 @@ TypeScript + ES Modules
 
 Transpile TypeScript on the fly and serve it from your server as ES Modules.
 
-```ts
+```ts ignore
 import { serveDirWithTs } from "@ayame113/ts-serve";
 
 Deno.serve((request) => serveDirWithTs(request));

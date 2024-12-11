@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  fail,
-} from "@std/assert";
+import { assertEquals, fail } from "@std/assert";
 import {
   MediaType,
   serveDirWithTs,
