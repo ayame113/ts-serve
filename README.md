@@ -32,7 +32,7 @@ console.log(1);
 
 As oak middleware:
 
-```ts
+```ts ignore
 import { Application } from "@oak/oak";
 import { tsMiddleware } from "@ayame113/ts-serve";
 
@@ -56,7 +56,7 @@ As a replacement for the
 [serveDir](https://doc.deno.land/https://deno.land/std@0.178.0/http/file_server.ts/~/serveDir)
 function in the Deno standard library:
 
-```ts
+```ts ignore
 import { serveDirWithTs } from "@ayame113/ts-serve";
 
 Deno.serve((request) => serveDirWithTs(request));
@@ -66,7 +66,7 @@ As a replacement for the
 [serveFile](https://doc.deno.land/https://deno.land/std@0.178.0/http/file_server.ts/~/serveFile)
 function in the Deno standard library:
 
-```ts
+```ts ignore
 import { serveFileWithTs } from "@ayame113/ts-serve";
 
 Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
@@ -74,7 +74,7 @@ Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
 
 As [Hono](https://honojs.dev/)'s handler:
 
-```ts
+```ts ignore
 import { Hono } from "@hono/hono";
 import { serveDirWithTs } from "@ayame113/ts-serve";
 
@@ -95,7 +95,7 @@ However, performance can be an issue on the server as loading the wasm file
 takes time. In that case, calling this function in advance can speed up later
 calls to the transpile function.
 
-```ts
+```ts ignore
 import { forceInstantiateWasm, serveDirWithTs } from "@ayame113/ts-serve";
 
 // load the wasm file in the background when the server starts.
