@@ -33,6 +33,7 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
  * });
  * await app.listen({ port: 8000 });
  * ```
+ * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function tsMiddleware(
   ctx: Context,

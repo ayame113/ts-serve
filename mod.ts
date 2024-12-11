@@ -17,6 +17,8 @@ import { MediaType, transpile } from "./utils/transpile.ts";
  * fourceInstantiateWasm();
  * serve((request) => serveDirWithTs(request));
  * ```
+ *
+ * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function fourceInstantiateWasm() {
   try {

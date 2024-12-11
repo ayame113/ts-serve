@@ -1,3 +1,7 @@
+# This module was move to jsr.
+
+# Please see [jsr.io/@ayame113/ts-serve](https://jsr.io/@ayame113/ts-serve)
+
 # ts-serve
 
 [![Test](https://github.com/ayame113/ts-serve/actions/workflows/test.yml/badge.svg)](https://github.com/ayame113/ts-serve/actions/workflows/test.yml)
