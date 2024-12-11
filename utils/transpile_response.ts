@@ -1,5 +1,5 @@
-import { contentType } from "https://deno.land/std@0.178.0/media_types/mod.ts";
-import { MediaType, transpile } from "../utils/transpile.ts";
+import { contentType } from "@std/media-types";
+import { MediaType, transpile, TranspileOptions } from "./transpile.ts";
 
 const jsContentType = contentType(".js");
 
@@ -7,12 +7,11 @@ const jsContentType = contentType(".js");
  * Transpile the body of the response and return a new response.
  *
  * ```ts
- * import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
- * import { serveFile } from "https://deno.land/std@0.178.0/http/file_server.ts";
+ * import { serveFile } from "@std/http/file-server";
  *
- * import { transpileResponse } from "https://deno.land/x/ts_serve@$MODULE_VERSION/utils/transpile_response.ts"
+ * import { transpileResponse } from "@ayame113/ts-serve/utils/transpile_response.ts"
  *
- * serve(async (request) => {
+ * Deno.serve(async (request) => {
  *   const filePath = "./mod.ts";
  *   const response = await serveFile(request, filePath);
  *   return await transpileResponse(response, request.url, filePath);
@@ -27,6 +26,7 @@ export async function transpileResponse(
   response: Response,
   requestUrl: string,
   filepath?: string,
+  transpileOptions?: TranspileOptions,
 ): Promise<Response> {
   const url = new URL(`ts-serve:///${requestUrl}`);
   // if range request, skip
@@ -35,11 +35,26 @@ export async function transpileResponse(
   }
   const pathname = filepath !== undefined ? filepath : url.pathname;
   if (pathname.endsWith(".ts")) {
-    return await rewriteTsResponse(response, url, MediaType.TypeScript);
+    return await rewriteTsResponse(
+      response,
+      url,
+      MediaType.TypeScript,
+      transpileOptions,
+    );
   } else if (pathname.endsWith(".tsx")) {
-    return await rewriteTsResponse(response, url, MediaType.Tsx);
+    return await rewriteTsResponse(
+      response,
+      url,
+      MediaType.Tsx,
+      transpileOptions,
+    );
   } else if (pathname.endsWith(".jsx")) {
-    return await rewriteTsResponse(response, url, MediaType.Jsx);
+    return await rewriteTsResponse(
+      response,
+      url,
+      MediaType.Jsx,
+      transpileOptions,
+    );
   } else {
     return response;
   }
@@ -49,9 +64,10 @@ async function rewriteTsResponse(
   response: Response,
   url: URL,
   mediaType: MediaType,
+  transpileOptions?: TranspileOptions,
 ) {
   const tsCode = await response.text();
-  const jsCode = await transpile(tsCode, url, mediaType);
+  const jsCode = await transpile(tsCode, url, mediaType, transpileOptions);
   const { headers } = response;
   headers.set("content-type", jsContentType);
   headers.delete("content-length");

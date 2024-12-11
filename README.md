@@ -8,10 +8,9 @@ TypeScript + ES Modules
 Transpile TypeScript on the fly and serve it from your server as ES Modules.
 
 ```ts
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
-import { serveDirWithTs } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+import { serveDirWithTs } from "@ayame113/ts-serve";
 
-serve((request) => serveDirWithTs(request));
+Deno.serve((request) => serveDirWithTs(request));
 ```
 
 ```tsx ignore
@@ -34,8 +33,8 @@ console.log(1);
 As oak middleware:
 
 ```ts
-import { Application } from "https://deno.land/x/oak@v12.0.1/mod.ts";
-import { tsMiddleware } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+import { Application } from "@oak/oak";
+import { tsMiddleware } from "@ayame113/ts-serve";
 
 const app = new Application();
 
@@ -58,10 +57,9 @@ As a replacement for the
 function in the Deno standard library:
 
 ```ts
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
-import { serveDirWithTs } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+import { serveDirWithTs } from "@ayame113/ts-serve";
 
-serve((request) => serveDirWithTs(request));
+Deno.serve((request) => serveDirWithTs(request));
 ```
 
 As a replacement for the
@@ -69,24 +67,22 @@ As a replacement for the
 function in the Deno standard library:
 
 ```ts
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
-import { serveFileWithTs } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+import { serveFileWithTs } from "@ayame113/ts-serve";
 
-serve((request) => serveFileWithTs(request, "./mod.ts"));
+Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
 ```
 
 As [Hono](https://honojs.dev/)'s handler:
 
 ```ts
-import { serve } from "https://deno.land/std@0.178.0/http/server.ts";
-import { Hono } from "https://deno.land/x/hono@v3.0.2/mod.ts";
-import { serveDirWithTs } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+import { Hono } from "@hono/hono";
+import { serveDirWithTs } from "@ayame113/ts-serve";
 
 const app = new Hono();
 app.get("*", (c) => {
   return serveDirWithTs(c.req.raw);
 });
-serve(app.fetch);
+Deno.serve(app.fetch);
 ```
 
 #### `fourceInstantiateWasm` function
@@ -100,15 +96,14 @@ takes time. In that case, calling this function in advance can speed up later
 calls to the transpile function.
 
 ```ts
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
 import {
   fourceInstantiateWasm,
   serveDirWithTs,
-} from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+} from "@ayame113/ts-serve";
 
 // load the wasm file in the background when the server starts.
 fourceInstantiateWasm();
-serve((request) => serveDirWithTs(request));
+Deno.serve((request) => serveDirWithTs(request));
 ```
 
 ## develop

@@ -1,17 +1,28 @@
+import { assertEquals, fail } from "@std/assert";
+import { delay } from "@std/async";
+import { Application } from "@oak/oak";
 import {
-  assertEquals,
-  fail,
-} from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { deferred } from "https://deno.land/std@0.178.0/async/mod.ts";
-import { Application } from "https://deno.land/x/oak@v12.0.1/mod.ts";
-import { MediaType, transpile, tsMiddleware } from "./mod.ts";
+  createTsMiddleware,
+  MediaType,
+  transpile,
+  tsMiddleware,
+} from "./mod.ts";
 
 const port = 8888;
-const jsContentType = "application/javascript; charset=UTF-8";
+const jsContentType = "text/javascript; charset=UTF-8";
+const importMap = {
+  imports: {
+    "@oak/oak": "./unknown.ts",
+    "@std/assert": "./unknown.ts",
+    "@std/async": "./unknown.ts",
+  },
+};
 
 async function startServer() {
   const app = new Application();
-  app.use(tsMiddleware);
+  app.use(
+    createTsMiddleware({ importMap }),
+  );
   app.use(async (ctx, next) => {
     try {
       await ctx.send({ root: "./" });
@@ -20,16 +31,18 @@ async function startServer() {
     }
   });
   const killSignal = new AbortController();
-  const listenPromise = deferred();
+  const listener = Promise.withResolvers();
   app.addEventListener("listen", (e) => {
-    listenPromise.resolve(e);
+    listener.resolve(e);
   });
   const server = app.listen({ port, signal: killSignal.signal });
-  await listenPromise;
+  await listener.promise;
 
   return async function abort() {
     killSignal.abort();
-    await server;
+    await delay(1000);
+    // Note: waiting to resolve https://github.com/oakserver/oak/issues/686
+    // await server;
   };
 }
 
@@ -52,7 +65,12 @@ async function transpileFile(path: string) {
     : path.endsWith(".jsx")
     ? MediaType.Jsx
     : fail("unknown extension");
-  return await transpile(await readTextFile(path), url, mediaType);
+  return await transpile(
+    await readTextFile(path),
+    url,
+    mediaType,
+    { importMap },
+  );
 }
 
 Deno.test({
@@ -165,8 +183,10 @@ Deno.test({
       ctx.response.type = ".ts";
     });
     const res = await app.handle(new Request("http://localhost/"));
+    const aaa = await res!.text();
+    console.log(aaa);
     assertEquals(
-      await res!.text(),
+      aaa,
       await transpile(code, new URL("http://localhost/"), MediaType.TypeScript),
     );
   },

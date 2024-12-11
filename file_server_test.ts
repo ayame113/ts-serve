@@ -1,8 +1,7 @@
 import {
   assertEquals,
   fail,
-} from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
+} from "@std/assert";
 import {
   MediaType,
   serveDirWithTs,
@@ -29,7 +28,11 @@ Deno.test({
   name: "file server - serveFileWithTs",
   async fn() {
     const controller = new AbortController();
-    const serverPromise = serve((request) => {
+    const serverPromise = Deno.serve({
+      signal: controller.signal,
+      port: 8886,
+      onListen() {},
+    }, (request) => {
       const { pathname } = new URL(request.url);
 
       if (pathname === "/mod.ts") {
@@ -42,10 +45,6 @@ Deno.test({
         return serveFileWithTs(request, "./test/a.jsx");
       }
       throw new Error("unreachable");
-    }, {
-      signal: controller.signal,
-      port: 8886,
-      onListen() {},
     });
 
     {
@@ -56,7 +55,7 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
     {
@@ -67,7 +66,7 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
     {
@@ -78,12 +77,12 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
 
     controller.abort();
-    await serverPromise;
+    await serverPromise.finished;
   },
 });
 
@@ -121,7 +120,7 @@ Deno.test({
     assertEquals(res.status, 200);
     assertEquals(
       res.headers.get("Content-Type"),
-      "application/javascript; charset=UTF-8",
+      "text/javascript; charset=UTF-8",
     );
   },
 });
@@ -130,13 +129,13 @@ Deno.test({
   name: "file server - serveDirWithTs",
   async fn() {
     const controller = new AbortController();
-    const serverPromise = serve(
-      (request) => serveDirWithTs(request, { quiet: true }),
+    const serverPromise = Deno.serve(
       {
         signal: controller.signal,
         port: 8887,
         onListen() {},
       },
+      (request) => serveDirWithTs(request, { quiet: true }),
     );
 
     {
@@ -147,7 +146,7 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
     {
@@ -158,7 +157,7 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
     {
@@ -169,12 +168,12 @@ Deno.test({
       );
       assertEquals(
         res.headers.get("Content-Type"),
-        "application/javascript; charset=UTF-8",
+        "text/javascript; charset=UTF-8",
       );
     }
 
     controller.abort();
-    await serverPromise;
+    await serverPromise.finished;
   },
 });
 
@@ -228,7 +227,7 @@ Deno.test({
     );
     assertEquals(
       res.headers.get("Content-Type"),
-      "application/javascript; charset=UTF-8",
+      "text/javascript; charset=UTF-8",
     );
   },
 });
