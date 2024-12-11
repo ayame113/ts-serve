@@ -3,19 +3,19 @@ import {
   type ServeDirOptions,
   serveFile,
   type ServeFileOptions,
-} from "https://deno.land/std@0.178.0/http/file_server.ts";
+} from "@std/http/file-server";
 
 import { transpileResponse } from "../utils/transpile_response.ts";
+import type { TranspileOptions } from "../utils/transpile.ts";
 
 /**
- * This can be used in the same way as the [serveFile](https://doc.deno.land/https://deno.land/std@0.178.0/http/file_server.ts/~/serveFile) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
+ * This can be used in the same way as the [serveFile](https://jsr.io/@std/http/doc/~/serveFile) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
- * ```ts
- * import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
- * import { serveFileWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+ * ```ts ignore
+ * import { serveFileWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
- * serve((request) => serveFileWithTs(request, "./mod.ts"));
+ * forceInstantiateWasm();
+ * Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
  * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
@@ -23,29 +23,40 @@ export async function serveFileWithTs(
   request: Request,
   filePath: string,
   options?: ServeFileOptions,
+  transpileOptions?: TranspileOptions,
 ): Promise<Response> {
   const response = await serveFile(request, filePath, options);
-  return await transpileResponse(response, request.url, filePath);
+  return await transpileResponse(
+    response,
+    request.url,
+    filePath,
+    transpileOptions,
+  );
 }
 
 /**
- * This can be used in the same way as the [serveDir](https://doc.deno.land/https://deno.land/std@0.178.0/http/file_server.ts/~/serveDir) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
+ * This can be used in the same way as the [serveDir](https://jsr.io/@std/http/doc/~/serveDir) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
- * ```ts
- * import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
- * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+ * ```ts ignore
+ * import { serveDirWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
- * serve((request) => serveDirWithTs(request));
+ * forceInstantiateWasm();
+ * Deno.serve((request) => serveDirWithTs(request));
  * ```
  * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function serveDirWithTs(
   request: Request,
   options?: ServeDirOptions,
+  transpileOptions?: TranspileOptions,
 ): Promise<Response> {
   const response = await serveDir(request, options);
-  return await transpileResponse(response, request.url);
+  return await transpileResponse(
+    response,
+    request.url,
+    undefined,
+    transpileOptions,
+  );
 }
 
-export { type ServeDirOptions, type ServeFileOptions };
+export type { ServeDirOptions, ServeFileOptions, TranspileOptions };

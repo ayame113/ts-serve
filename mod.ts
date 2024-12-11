@@ -9,19 +9,20 @@ import { MediaType, transpile } from "./utils/transpile.ts";
  * However, performance can be an issue on the server as loading the wasm file takes time.
  * In that case, calling this function in advance can speed up later calls to the transpile function.
  *
- * ```ts
- * import { serve } from "https://deno.land/std@0.178.0/http/mod.ts";
- * import { serveDirWithTs, fourceInstantiateWasm } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+ * ```ts ignore
+ * import { serveDirWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
  * // load the wasm file in the background when the server starts.
- * fourceInstantiateWasm();
- * serve((request) => serveDirWithTs(request));
+ * forceInstantiateWasm();
+ * Deno.serve((request) => serveDirWithTs(request));
  * ```
  *
  * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
-export async function fourceInstantiateWasm() {
+export async function forceInstantiateWasm() {
   try {
     await transpile("", new URL("file:///src"), MediaType.TypeScript);
   } catch (_) { /* ignore error*/ }
 }
+
+export const fourceInstantiateWasm = forceInstantiateWasm;

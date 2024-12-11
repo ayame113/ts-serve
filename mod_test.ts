@@ -1,15 +1,12 @@
-import { assert } from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import {
-  assertSpyCalls,
-  stub,
-} from "https://deno.land/std@0.178.0/testing/mock.ts";
+import { assert } from "@std/assert";
+import { assertSpyCalls, stub } from "@std/testing/mock";
 
-import { fourceInstantiateWasm, MediaType, transpile } from "./mod.ts";
+import { forceInstantiateWasm, MediaType, transpile } from "./mod.ts";
 
 Deno.test({
-  name: "fourceInstantiateWasm",
+  name: "forceInstantiateWasm",
   async fn() {
-    await fourceInstantiateWasm();
+    await forceInstantiateWasm();
     const start = Date.now();
     await transpile(
       "function foo(arg: string): string {return arg}",
@@ -22,7 +19,7 @@ Deno.test({
 });
 
 Deno.test({
-  name: "fourceInstantiateWasm - failed to load wasm",
+  name: "forceInstantiateWasm - failed to load wasm",
   async fn() {
     // Don't throw an error when transpile() throws
     const fetchStub = stub(
@@ -33,7 +30,7 @@ Deno.test({
       },
     );
     try {
-      await fourceInstantiateWasm();
+      await forceInstantiateWasm();
       assertSpyCalls(fetchStub, 1);
     } finally {
       fetchStub.restore();

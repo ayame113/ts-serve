@@ -1,4 +1,7 @@
-import { emit } from "https://deno.land/x/emit@0.16.0/mod.ts";
+import {
+  transpile as emit,
+  type TranspileOptions as EmitOptions,
+} from "@deno/emit";
 
 /** File type. You can pass it as an option to the transpile function to tell it what media type the source is. */
 export enum MediaType {
@@ -14,6 +17,11 @@ const contentType = {
   [MediaType.Tsx]: "text/tsx; charset=utf-8",
 };
 
+export interface TranspileOptions {
+  compilerOptions?: EmitOptions["compilerOptions"];
+  importMap?: EmitOptions["importMap"];
+}
+
 /**
  * Transpile the given TypeScript code into JavaScript code.
  *
@@ -23,7 +31,7 @@ const contentType = {
  * @return JavaScript code
  *
  * ```ts
- * import { transpile, MediaType } from "https://deno.land/x/ts_serve@$MODULE_VERSION/mod.ts";
+ * import { transpile, MediaType } from "@ayame113/ts-serve";
  * console.log(await transpile(
  *   "function name(params:type) {}",
  *   new URL("file:///src.ts"),
@@ -36,7 +44,8 @@ export async function transpile(
   content: string,
   targetUrl: URL,
   mediaType: MediaType,
-) {
+  options: TranspileOptions = {},
+): Promise<string> {
   const targetUrlStr = targetUrl.toString();
   const result = await emit(targetUrl, {
     load(specifier) {
@@ -57,6 +66,8 @@ export async function transpile(
         },
       });
     },
+    compilerOptions: options.compilerOptions,
+    importMap: options.importMap,
   });
-  return result[targetUrlStr];
+  return result.get(targetUrlStr)!;
 }
