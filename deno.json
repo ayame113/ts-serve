@@ -4,7 +4,7 @@
   "license": "MIT",
   "exports": "./mod.ts",
   "tasks": {
-    "test": "deno test --doc --parallel --shuffle --allow-net=deno.land,localhost,0.0.0.0 --allow-read=.",
+    "test": "deno test --doc --parallel --shuffle --allow-net=deno.land,localhost,0.0.0.0,jsr.io:443 --allow-read=.",
     "check": "deno check ./mod.ts"
   },
   "imports": {
