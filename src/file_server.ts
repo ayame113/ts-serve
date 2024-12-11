@@ -17,7 +17,6 @@ import type { TranspileOptions } from "../utils/transpile.ts";
  * forceInstantiateWasm();
  * Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
- * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function serveFileWithTs(
   request: Request,
@@ -43,7 +42,6 @@ export async function serveFileWithTs(
  * forceInstantiateWasm();
  * Deno.serve((request) => serveDirWithTs(request));
  * ```
- * @deprecated please use [jsr](https://jsr.io/@ayame113/ts-serve) version
  */
 export async function serveDirWithTs(
   request: Request,
