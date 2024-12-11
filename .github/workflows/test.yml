@@ -41,7 +41,7 @@ jobs:
       - name: Create coverage report
         run: deno coverage ./coverage --lcov > coverage.lcov
       - name: Codecov
-        uses: codecov/codecov-action@v1.5.2
+        uses: codecov/codecov-action@v5
         with:
-          file: ./coverage.lcov
+          files: ./coverage.lcov
           fail_ci_if_error: true
