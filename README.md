@@ -85,7 +85,7 @@ app.get("*", (c) => {
 Deno.serve(app.fetch);
 ```
 
-#### `fourceInstantiateWasm` function
+#### `forceInstantiateWasm` function
 
 Calling this function will load the wasm file used in the deno_emit of the
 dependency. Even if you don't call this function, if you call the transpile
@@ -96,13 +96,10 @@ takes time. In that case, calling this function in advance can speed up later
 calls to the transpile function.
 
 ```ts
-import {
-  fourceInstantiateWasm,
-  serveDirWithTs,
-} from "@ayame113/ts-serve";
+import { forceInstantiateWasm, serveDirWithTs } from "@ayame113/ts-serve";
 
 // load the wasm file in the background when the server starts.
-fourceInstantiateWasm();
+forceInstantiateWasm();
 Deno.serve((request) => serveDirWithTs(request));
 ```
 

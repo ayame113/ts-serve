@@ -18,9 +18,9 @@ const jsxType = new Set<string | undefined>(["jsx", ".jsx", "text/jsx"]);
  *
  * ```ts
  * import { Application } from "@oak/oak";
- * import { createTsMiddleware, fourceInstantiateWasm } from "@ayame113/ts-serve";
+ * import { createTsMiddleware, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
+ * forceInstantiateWasm();
  * const app = new Application();
  *
  * // use middleware and transpile TS code
@@ -111,9 +111,9 @@ export function createTsMiddleware(
  *
  * ```ts
  * import { Application } from "@oak/oak";
- * import { tsMiddleware, fourceInstantiateWasm } from "@ayame113/ts-serve";
+ * import { tsMiddleware, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
+ * forceInstantiateWasm();
  * const app = new Application();
  *
  * // use middleware and transpile TS code

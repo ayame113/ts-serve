@@ -12,9 +12,9 @@ import { TranspileOptions } from "../utils/transpile.ts";
  * This can be used in the same way as the [serveFile](https://jsr.io/@std/http/doc/~/serveFile) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
  * ```ts
- * import { serveFileWithTs, fourceInstantiateWasm } from "@ayame113/ts-serve";
+ * import { serveFileWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
+ * forceInstantiateWasm();
  * Deno.serve((request) => serveFileWithTs(request, "./mod.ts"));
  * ```
  */
@@ -37,9 +37,9 @@ export async function serveFileWithTs(
  * This can be used in the same way as the [serveDir](https://jsr.io/@std/http/doc/~/serveDir) function of the standard library, but if the file is TypeScript, it will be rewritten to JavaScript.
  *
  * ```ts
- * import { serveDirWithTs, fourceInstantiateWasm } from "@ayame113/ts-serve";
+ * import { serveDirWithTs, forceInstantiateWasm } from "@ayame113/ts-serve";
  *
- * fourceInstantiateWasm();
+ * forceInstantiateWasm();
  * Deno.serve((request) => serveDirWithTs(request));
  * ```
  */
